@@ -1,0 +1,58 @@
+import React, { useState } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
+
+const Navbar = () => {
+    const router = useRouter();
+    return (
+        <>
+            <div className="px-2">
+                <div className="flex flex-row items-center justify-between text-gray-700">
+                    <div className="font-bold cursor-pointer text-lg ">
+                        Dashboard
+                    </div>
+                    <div className="relative mx-7">
+                        <button className="peer font-bold cursor-pointer text-lg">
+                            유지보수 및 기술지원
+                        </button>
+                        <div className="hidden absolute py-2 px-3 left-0 top-full peer-hover:flex hover:flex w-48 flex-col bg-white shadow-md border-t-[3px] border-[#0072bb] z-[10]">
+                            <a
+                                className="font-semibold text-gray-400 py-2.5 hover:text-[#0072bb]"
+                                href="#"
+                            >
+                                문의
+                            </a>
+                        </div>
+                    </div>
+                    <div className="relative">
+                        <div className="peer font-bold cursor-pointer text-lg">
+                            <Link href="/sysMgt/code">시스템 관리</Link>
+                        </div>
+                        <div className=" hidden absolute py-2 px-3 left-0 top-full peer-hover:flex hover:flex w-48 flex-col bg-white shadow-md border-t-[3px] border-[#0072bb] z-[10]">
+                            <Link
+                                className="font-semibold text-gray-400 py-2.5 border-b-[1px] hover:text-[#0072bb]"
+                                href="/sysMgt/code"
+                            >
+                                코드정보
+                            </Link>
+                            <a
+                                className="font-semibold text-gray-400 py-2.5 border-b-[1px] hover:text-[#0072bb]"
+                                href="/sysMgt/user"
+                            >
+                                사용자
+                            </a>
+                            <a
+                                className="font-semibold text-gray-400 py-2.5 hover:text-[#0072bb]"
+                                href="#"
+                            >
+                                프로젝트
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+};
+
+export default Navbar;
