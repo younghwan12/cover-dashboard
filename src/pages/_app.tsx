@@ -4,12 +4,16 @@ import "primereact/resources/primereact.min.css";
 import type { AppProps } from "next/app";
 
 import Header from "../layout/header/Header";
+import { Provider } from "react-redux";
+import { store } from "../redux/store";
 
 const App = ({ Component, pageProps }: AppProps) => {
     return (
         <>
-            <Header />
-            <Component {...pageProps} />
+            <Provider store={store}>
+                <Header />
+                <Component {...pageProps} />
+            </Provider>
         </>
     );
 };
