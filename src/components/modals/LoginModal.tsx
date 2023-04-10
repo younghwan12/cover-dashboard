@@ -7,13 +7,13 @@ import { FcGoogle } from "react-icons/fc";
 import { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-import useRegisterModal from "@/app/hooks/useRegisterModal";
-import useLoginModal from "@/app/hooks/useLoginModal";
+import useRegisterModal from "@/hooks/useRegisterModal";
+import useLoginModal from "@/hooks/useLoginModal";
 import Modal from "./Modal";
 import Heading from "../Heading";
 import Input from "../inputs/Input";
 
-import { toast } from "react-hot-toast";
+// import { toast } from "react-hot-toast";
 import Button from "../Button";
 import { useRouter } from "next/navigation";
 
@@ -34,26 +34,26 @@ const LoginModal = () => {
         },
     });
 
-    const onSubmit: SubmitHandler<FieldValues> = (data) => {
-        setIsLoading(true);
+    // const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    //     setIsLoading(true);
 
-        signIn("credentials", {
-            ...data,
-            redirect: false,
-        }).then((callback) => {
-            setIsLoading(false);
+    //     signIn("credentials", {
+    //         ...data,
+    //         redirect: false,
+    //     }).then((callback) => {
+    //         setIsLoading(false);
 
-            if (callback?.ok) {
-                toast.success("Logged in");
-                router.refresh();
-                loginModal.onClose();
-            }
+    //         if (callback?.ok) {
+    //             toast.success("Logged in");
+    //             router.refresh();
+    //             loginModal.onClose();
+    //         }
 
-            if (callback?.error) {
-                toast.error(callback.error);
-            }
-        });
-    };
+    //         if (callback?.error) {
+    //             toast.error(callback.error);
+    //         }
+    //     });
+    // };
 
     const bodyContent = (
         <div className="flex flex-col gap-4">
@@ -117,7 +117,8 @@ const LoginModal = () => {
             title="로그인"
             actionLabel="Continue"
             onClose={loginModal.onClose}
-            onSubmit={handleSubmit(onSubmit)}
+            // onSubmit={handleSubmit(onSubmit)}
+            onSubmit={() => console.log("onSubmit")}
             body={bodyContent}
             footer={footerContent}
         />
