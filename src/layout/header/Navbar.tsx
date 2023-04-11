@@ -33,12 +33,12 @@ const Navbar = () => {
                             >
                                 코드정보
                             </Link>
-                            <a
+                            <Link
                                 className="text-gray-400 py-2.5 border-b-[1px] hover:text-[#0072bb]"
                                 href="/sysMgt/user"
                             >
                                 사용자
-                            </a>
+                            </Link>
                             <a
                                 className="text-gray-400 py-2.5 hover:text-[#0072bb]"
                                 href="#"

@@ -2,14 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import appApi from "./appApi";
 import { rtkErrorLogger } from "./middlewares";
-
-// import { boardMgtReducer } from "@/features/board/redux";
+import authSlice from "@/features/login/redux/loginSlice";
 
 const reducers = combineReducers({
-    // board: boardMgtReducer,
-    // cm: cmMgtReducer,
-    // wrimodal: wriModalReducer,
     [appApi.reducerPath]: appApi.reducer,
+    auth: authSlice.reducer,
 });
 
 export const store = configureStore({

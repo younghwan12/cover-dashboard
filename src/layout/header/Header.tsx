@@ -1,8 +1,11 @@
+import React, { useEffect } from "react";
+import { useAppSelector } from "@/redux/hooks";
 import Container from "../Container";
 import Logo from "./Logo";
 import Navbar from "./Navbar";
 import Pagination from "./Pagination";
 import UserMenu from "./UserMenu";
+import { RootState } from "@/redux/store";
 
 const Header = () => {
     return (

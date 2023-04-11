@@ -12,3 +12,12 @@ body,
 .p-breadcrumb .p-menuitem-text {
     line-height: inherit !important;
 }
+
+.ant-btn-default {
+    margin-right: 3px;
+}
+
+.ant-btn-primary {
+    border: 1px solid #d9d9d9;
+    color: #000;
+}

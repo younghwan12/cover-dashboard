@@ -1,16 +1,16 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Router } from "next/router";
 
 const Logo = () => {
     const router = useRouter();
 
     return (
-        <div
+        <Link
             className="flex items-center justify-center cursor-pointer"
-            onClick={() => router.push("/")}
+            href="/"
         >
             <Image
                 alt="logo"
@@ -22,7 +22,7 @@ const Logo = () => {
             <span className="hidden md:block ml-1 text-2xl font-semibold text-gray-700 cursor-pointer mr-10 top-[3px] relative">
                 고객센터
             </span>
-        </div>
+        </Link>
     );
 };
 
