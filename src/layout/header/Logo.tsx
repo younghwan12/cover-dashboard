@@ -9,17 +9,17 @@ const Logo = () => {
 
     return (
         <div
-            className="flex items-center cursor-pointer"
+            className="flex items-center justify-center cursor-pointer"
             onClick={() => router.push("/")}
         >
             <Image
                 alt="logo"
-                className="hidden md:block"
+                // className="hidden md:block"
                 width="163"
                 height="163"
                 src="/images/logo.png"
             />
-            <span className="hidden md:block ml-1 text-2xl font-bold text-gray-700 cursor-pointer mr-10">
+            <span className="hidden md:block ml-1 text-2xl font-semibold text-gray-700 cursor-pointer mr-10 top-[3px] relative">
                 고객센터
             </span>
         </div>

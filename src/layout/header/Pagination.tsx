@@ -38,7 +38,7 @@ const Pagination = () => {
     return (
         <div className="py-3 mx-auto xl:px-20 md:px-10 sm:px-2 px-4 relative items-center border-gray-300 border-b-[1px] border-t-[1px] bg-gray-50 flex justify-between">
             <BreadCrumb model={breadcrumbItems} home={home} />
-            <div className="flex">
+            {/* <div className="flex">
                 <Select
                     style={{ width: 250 }}
                     onChange={handleChange}
@@ -53,7 +53,7 @@ const Pagination = () => {
                         },
                     ]}
                 />
-            </div>
+            </div> */}
         </div>
     );
 };

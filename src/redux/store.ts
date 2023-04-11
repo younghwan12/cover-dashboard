@@ -3,18 +3,13 @@ import { combineReducers } from "redux";
 import appApi from "./appApi";
 import { rtkErrorLogger } from "./middlewares";
 
-import { boardMgtReducer } from "@/features/board/redux";
-import { cmMgtReducer } from "@/features/cm/redux";
-import wriModalReducer from "@/features/modal/redux/boardModalSlice";
-
-import { pokemonApi } from "@/api/pokemonApi";
+// import { boardMgtReducer } from "@/features/board/redux";
 
 const reducers = combineReducers({
-    board: boardMgtReducer,
-    cm: cmMgtReducer,
-    wrimodal: wriModalReducer,
+    // board: boardMgtReducer,
+    // cm: cmMgtReducer,
+    // wrimodal: wriModalReducer,
     [appApi.reducerPath]: appApi.reducer,
-    [pokemonApi.reducerPath]: pokemonApi.reducer,
 });
 
 export const store = configureStore({
@@ -26,7 +21,6 @@ export const store = configureStore({
             },
         })
             .concat(appApi.middleware)
-            .concat(pokemonApi.middleware)
             .concat(rtkErrorLogger),
 });
 
