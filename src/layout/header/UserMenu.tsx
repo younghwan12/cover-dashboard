@@ -12,7 +12,6 @@ const UserMenu = () => {
 
     const handleLogout = () => {
         modal.confirm({
-            className: "",
             title: "로그아웃 하시겠습니까?",
             onOk() {
                 signOut();
@@ -30,9 +29,9 @@ const UserMenu = () => {
                 >
                     {session.user?.name} 님 로그아웃
                 </button>
-                <div className="border-[1px] rounded px-[14px] py-[6px] bg-slate-50 text-sm hover:bg-gray-200">
-                    회원가입
-                </div>
+                <button className="border-[1px] rounded px-[14px] py-[6px] bg-slate-50 text-sm hover:bg-gray-200">
+                    내정보
+                </button>
             </div>
         );
     }

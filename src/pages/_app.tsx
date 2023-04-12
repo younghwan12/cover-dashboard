@@ -7,8 +7,8 @@ import { Provider } from "react-redux";
 import { store } from "../redux/store";
 import { useRouter } from "next/router";
 import { SessionProvider } from "next-auth/react";
-
-// import getCurrentUser from "./actions/getCurrentUser";
+import getCurrentUser from "@/actions/getCurrentUser";
+import { useEffect } from "react";
 
 const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
     const router = useRouter();
@@ -19,8 +19,6 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
         router.pathname !== "/register" &&
         router.pathname !== "/findUserId" &&
         router.pathname !== "/lostPassword";
-
-    // const currentUser = await getCurrentUser();
 
     return (
         <>
@@ -33,4 +31,5 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
         </>
     );
 };
+
 export default App;
