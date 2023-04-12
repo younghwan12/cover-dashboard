@@ -31,8 +31,8 @@ const LoginContainer = () => {
     return (
         <div className="min-h-screen flex flex-col py-12 sm:px-6 lg:px-8">
             {/* <div className="sm:mx-auto sm:w-full sm:max-w-md"> */}
-            <h2 className="text-center text-3xl font-extrabold text-[#555555] mt-[80px]">
-                피엠에스플러스 고객센터
+            <h2 className="text-center text-3xl text-[#555555] mt-[80px]">
+                <Link href="/">피엠에스플러스 고객센터</Link>
             </h2>
             {/* </div> */}
 

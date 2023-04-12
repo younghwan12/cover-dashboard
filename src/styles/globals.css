@@ -3,10 +3,12 @@
 @tailwind utilities;
 
 html {
-    height: 100vh;
+    /* height: 100vh; */
 }
 body {
-    font-family: "GmarketSans";
+    /* font-family: "GmarketSans"; */
+    font-family: "NexonLv1Gothic";
+    font-weight: 600;
     margin: 0;
     padding: 0;
     /* min-height: 100vh; */
