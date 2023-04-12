@@ -13,16 +13,23 @@ import { SessionProvider } from "next-auth/react";
 const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
     const router = useRouter();
 
+    // `Header` 컴포넌트의 렌더링 여부를 결정하는 변수
+    const shouldRenderHeader =
+        router.pathname !== "/login" &&
+        router.pathname !== "/register" &&
+        router.pathname !== "/findUserId" &&
+        router.pathname !== "/lostPassword";
+
     // const currentUser = await getCurrentUser();
 
     return (
         <>
-            <SessionProvider session={session}>
-                <Provider store={store}>
-                    {router.pathname !== "/login" && <Header />}
+            <Provider store={store}>
+                <SessionProvider session={session}>
+                    {shouldRenderHeader && <Header />}
                     <Component {...pageProps} />
-                </Provider>
-            </SessionProvider>
+                </SessionProvider>
+            </Provider>
         </>
     );
 };

@@ -5,6 +5,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useAppDispatch } from "@/redux/hooks";
 import { useRouter } from "next/router";
 // import { setSession } from "@/features/login/redux/loginSlice";
+import Link from "next/link";
 
 const LoginContainer = () => {
     const dispatch = useAppDispatch();
@@ -99,15 +100,24 @@ const LoginContainer = () => {
                                 </label>
                             </div>
                             <div>
-                                <button className="bg-[#767676] text-[#fff] text-sm px-2 py-1 rounded mr-1 hover:bg-[#5c5c5c]">
+                                <Link
+                                    href="/findUserId"
+                                    className="bg-[#767676] text-sm text-[#fff] px-2 py-1 rounded mr-1 hover:bg-[#5c5c5c]"
+                                >
                                     ID 찾기
-                                </button>
-                                <button className="bg-[#767676] text-[#fff] text-sm px-2 py-1 rounded mr-1 hover:bg-[#5c5c5c]">
+                                </Link>
+                                <Link
+                                    href="/lostPassword"
+                                    className="bg-[#767676] text-sm text-[#fff] px-2 py-1 rounded mr-1 hover:bg-[#5c5c5c]"
+                                >
                                     비밀번호 재발급
-                                </button>
-                                <button className="bg-[#767676] text-[#fff] text-sm px-2 py-1 rounded hover:bg-[#5c5c5c]">
+                                </Link>
+                                <Link
+                                    href="/register"
+                                    className="bg-[#767676] text-sm text-[#fff] px-2 py-1 rounded hover:bg-[#5c5c5c]"
+                                >
                                     회원가입
-                                </button>
+                                </Link>
                             </div>
                         </div>
                         <hr />

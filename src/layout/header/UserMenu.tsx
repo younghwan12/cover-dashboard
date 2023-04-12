@@ -45,9 +45,12 @@ const UserMenu = () => {
                 >
                     로그인
                 </Link>
-                <div className="border-[1px] rounded px-[14px] py-[6px] bg-slate-50 text-sm hover:bg-gray-200">
+                <Link
+                    href="/register"
+                    className="border-[1px] rounded px-[14px] py-[6px] bg-slate-50 text-sm hover:bg-gray-200"
+                >
                     회원가입
-                </div>
+                </Link>
             </div>
         </>
     );
