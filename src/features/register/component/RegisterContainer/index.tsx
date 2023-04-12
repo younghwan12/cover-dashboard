@@ -1,7 +1,24 @@
-import { Form, FormItem, Input, Search, Button } from "@/common";
-import { Space } from "antd";
+import {
+    Form,
+    FormItem,
+    Input,
+    Search,
+    Button,
+    useForm,
+    Space,
+} from "@/common";
+import {
+    SearchForm,
+    SearchFormBox,
+    SearchFormControls,
+} from "@/components/search";
 
 const RegisterContainer = () => {
+    const [form] = useForm();
+
+    const handleFinish = (v) => {
+        console.log(v);
+    };
     return (
         <>
             <div className="fixed l-0 t-0 w-full min-h-screen bg-[#F6F9FF]">
@@ -25,16 +42,87 @@ const RegisterContainer = () => {
                         (피엠에스플러스 고객지원센터 관리자:
                         kihihi81@pmsplus.co.kr)
                     </div>
-                    <Form>
-                        <FormItem label="사용자 ID" required={true}>
-                            <Space>
-                                <FormItem name="title" className="mb-0">
-                                    {/* <Search /> */}
-                                    <Input placeholder="사용자 id를 입력하세요" />
+                    <Form
+                        form={form}
+                        onFinish={handleFinish}
+                        className="border border-[#cdcdcd] px-5 py-3 mt-5 rounded"
+                    >
+                        <SearchForm>
+                            <SearchFormBox>
+                                <FormItem label="사용자 ID" required={true}>
+                                    <Space className="">
+                                        <FormItem name="title" className="mb-0">
+                                            {/* <Search /> */}
+                                            <Input placeholder="사용자 id를 입력하세요" />
+                                        </FormItem>
+                                        <Button>중복확인</Button>
+                                    </Space>
                                 </FormItem>
-                                <Button>중복확인</Button>
-                            </Space>
-                        </FormItem>
+                                <FormItem label="비밀번호" required={true}>
+                                    <Space>
+                                        <FormItem
+                                            name="password"
+                                            className="mb-0"
+                                        >
+                                            {/* <Search /> */}
+                                            <Input placeholder="비밀번호를 입력하세요" />
+                                        </FormItem>
+                                    </Space>
+                                </FormItem>
+                                <FormItem label="비밀번호확인" required={true}>
+                                    <Space>
+                                        <FormItem
+                                            name="passwordCheck"
+                                            className="mb-0"
+                                        >
+                                            <Input placeholder="비밀번호를 입력하세요" />
+                                        </FormItem>
+                                    </Space>
+                                </FormItem>
+                                <FormItem label="이름" required={true}>
+                                    <Space>
+                                        <FormItem name="name" className="mb-0">
+                                            <Input placeholder="비밀번호를 입력하세요" />
+                                        </FormItem>
+                                    </Space>
+                                </FormItem>
+                                <FormItem label="메일" required={true}>
+                                    <Space>
+                                        <FormItem name="email" className="mb-0">
+                                            <Input placeholder="비밀번호를 입력하세요" />
+                                        </FormItem>
+                                    </Space>
+                                </FormItem>
+                                <FormItem label="회사" required={true}>
+                                    <Space>
+                                        <FormItem
+                                            name="company"
+                                            className="mb-0"
+                                        >
+                                            <Input placeholder="비밀번호를 입력하세요" />
+                                        </FormItem>
+                                    </Space>
+                                </FormItem>
+                                <FormItem label="연락처" required={true}>
+                                    <Space>
+                                        <FormItem name="phone" className="mb-0">
+                                            <Input placeholder="비밀번호를 입력하세요" />
+                                        </FormItem>
+                                    </Space>
+                                </FormItem>
+                                <FormItem label="프로젝트" required={true}>
+                                    <Space>
+                                        <FormItem
+                                            name="project"
+                                            className="mb-0"
+                                        >
+                                            <Input placeholder="비밀번호를 입력하세요" />
+                                        </FormItem>
+                                    </Space>
+                                </FormItem>
+                                <SearchFormControls form={form} />
+                            </SearchFormBox>
+                        </SearchForm>
                     </Form>
                 </div>
             </div>
