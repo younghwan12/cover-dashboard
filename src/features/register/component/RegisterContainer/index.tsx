@@ -1,3 +1,6 @@
+import { Form, FormItem, Input, Search, Button } from "@/common";
+import { Space } from "antd";
+
 const RegisterContainer = () => {
     return (
         <>
@@ -22,6 +25,17 @@ const RegisterContainer = () => {
                         (피엠에스플러스 고객지원센터 관리자:
                         kihihi81@pmsplus.co.kr)
                     </div>
+                    <Form>
+                        <FormItem label="사용자 ID" required={true}>
+                            <Space>
+                                <FormItem name="title" className="mb-0">
+                                    {/* <Search /> */}
+                                    <Input placeholder="사용자 id를 입력하세요" />
+                                </FormItem>
+                                <Button>중복확인</Button>
+                            </Space>
+                        </FormItem>
+                    </Form>
                 </div>
             </div>
         </>
