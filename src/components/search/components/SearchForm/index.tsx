@@ -23,7 +23,6 @@ const SearchForm = (props: SearchFormProps) => {
                         <span className="searchForm-title-text">
                             {props.title}
                         </span>
-
                         {props.tooltip !== undefined ? (
                             <Space className="gap-0">
                                 {props.tooltip && props.tooltip !== undefined
