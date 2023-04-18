@@ -7,16 +7,132 @@ import { useRouter } from "next/router";
 // import { setSession } from "@/features/login/redux/loginSlice";
 import Link from "next/link";
 
+import axios from "axios";
+
+import { parseCookies, setCookie } from "nookies";
+import { getUserInfo } from "../../redux/loginAction";
+import { useModal } from "@/components/Modal";
+import { unwrapResult } from "@reduxjs/toolkit";
+
 const LoginContainer = () => {
+    const [modal, contextHolder] = useModal();
     const dispatch = useAppDispatch();
     const router = useRouter();
 
+    // 아이디와 패스워드 값을 상태로 관리
+    const [userId, setUserId] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleSignInPP = () => {
+        console.log("userId: ", userId);
+        console.log("password: ", password);
+
+        // 아이디와 패스워드 값을 서버로 전송하는 API 요청 코드
+        //FIXME - BE 주소를 설정값으로 뺄것, id&pwd 하드코딩
+        //BE주소: http://coverdreamit.co.kr:7001
+        axios
+            .get(
+                "http://coverdreamit.co.kr:7001" +
+                    "/PortalCommon/login/?user_id=admin&pwd=11111111",
+                {}
+            )
+            .then((response) => {
+                //로그인 성공 시 인증 토큰 얻어옴, 인증 토큰을 얻어서 기존에는 쿠키에 넣었는데 리액트에서는 리덕스?스토리지? ..어디?
+
+                // 로그인 처리 후 필요한 동작 수행
+                console.log(response.data);
+
+                /*
+        기존 로그인 처리 프로세스...
+
+        var type = info.type;
+					
+        if(type == "notAuthError") {
+            loginAlert('권한이 지정되지 않았습니다. <br/>고객지원센터 관리자(nexcore4u@sk.com, 02-6400-6123)에게 문의하세요.','user_id');
+            return false;
+        } else if(type == "accountErr") {
+            loginAlert('잘못된 계정 또는 비밀번호입니다. <br/>입력 오류 5회 이상 시 계정이 비활성화됩니다.','user_id');
+            return false;
+        } else if (type == "activeNError") {
+            loginAlert('계정이 비활성화 상태입니다. <br/>고객지원센터 관리자(nexcore4u@sk.com, 02-6400-6123)에게 문의하세요.','user_id');
+            return false;
+        } else if (type == "activeNPwError") {
+            loginAlert('비밀번호 5회이상 입력오류로 계정이 비활성화 상태입니다. <br/>비밀번호 재발급 또는 고객지원센터 관리자(nexcore4u@sk.com, 02-6400-6123)에게 문의하세요.','user_id');
+            return false;
+        } else if (type == "activeWaitError") {
+            loginAlert('계정이 대기 상태입니다. <br/>고객지원센터 관리자(nexcore4u@sk.com, 02-6400-6123)에게 문의하세요.','user_id');
+            return false;
+        } else if (type == "success") {
+            
+            setCookie("jwt", info.jwt);
+            setCookie("fromLogin", "Y");
+
+            if(document.referrer.indexOf("resetPassword") > -1 || document.referrer.indexOf("lostPassword") > -1  || document.referrer.indexOf("findUserId") > -1) {
+                location.href = "/";
+            } else {
+                location.href = document.referrer;
+            } 
+            
+        }
+
+        */
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    };
+
+    const handleFinish = async () => {
+        try {
+            const loginCheck = await dispatch(
+                getUserInfo({
+                    params: {
+                        user_id: userId,
+                        pwd: password,
+                    },
+                })
+            );
+            const payload: any = loginCheck.payload;
+
+            if (payload.type === "accountErr") {
+                modal.error({
+                    title: "잘못된 계정 또는 비밀번호입니다.",
+                    content: "입력 오류 5회 이상 시 계정이 비활성화됩니다.",
+                });
+            } else if (payload.type === "notAuthError") {
+                modal.error({
+                    title: "권한이 지정되지 않았습니다.",
+                    content:
+                        "고객지원센터 관리자(nexcore4u@sk.com, 02-6400-6123)에게 문의하세요.",
+                });
+            } else if (payload.type === "activeNError") {
+                modal.error({
+                    title: "계정이 비활성화 상태입니다.",
+                    content:
+                        "고객지원센터 관리자(nexcore4u@sk.com, 02-6400-6123)에게 문의하세요.",
+                });
+            } else if (payload.type === "activeNPwError") {
+                modal.error({
+                    title: "비밀번호 5회이상 입력오류로 계정이 비활성화 상태입니다.",
+                    content:
+                        "비밀번호 재발급 또는 고객지원센터 관리자(nexcore4u@sk.com, 02-6400-6123)에게 문의하세요.",
+                });
+            } else if (payload.type === "activeWaitError") {
+                modal.error({
+                    title: "계정이 대기 상태입니다.",
+                    content:
+                        "고객지원센터 관리자(nexcore4u@sk.com, 02-6400-6123)에게 문의하세요.",
+                });
+            } else if (payload.type === "success") {
+                router.push("/");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     // 구글 로그인방식
     const { data: session, status } = useSession();
-
-    const handleSignIn = () => {
-        signIn("google");
-    };
 
     useEffect(() => {
         if (status === "authenticated") {
@@ -35,7 +151,7 @@ const LoginContainer = () => {
                 <Link href="/">피엠에스플러스 고객센터</Link>
             </h2>
             {/* </div> */}
-
+            {contextHolder}
             <div className="xl:min-w-[500px] mt-8 sm:mx-auto sm:w-full sm:max-w-md border-t-[6px] border-[#0C9BE7] drop-shadow-xl">
                 <div className="bg-[#F7F7F7] py-8 px-4 shadow sm:px-10">
                     <div className="pb-4 mb-2 text-2xl text-gray-700 border-b-[1px] border-[#dcdcdc]">
@@ -54,6 +170,8 @@ const LoginContainer = () => {
                                     id="id"
                                     name="id"
                                     type="id"
+                                    value={userId}
+                                    onChange={(e) => setUserId(e.target.value)}
                                     autoComplete="id"
                                     required
                                     placeholder="사용자ID를 입력하세요."
@@ -74,6 +192,10 @@ const LoginContainer = () => {
                                     id="password"
                                     name="password"
                                     type="password"
+                                    value={password}
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
                                     autoComplete="current-password"
                                     required
                                     placeholder="비밀번호를 입력하세요."
@@ -81,7 +203,11 @@ const LoginContainer = () => {
                                 />
                             </div>
                         </div>
-                        <button className="w-full py-2 px-4 border border-transparent rounded-md text-xl text-white bg-[#0C9BE7] hover:bg-[#007cbe] transition delay-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0C9BE7]">
+                        <button
+                            // onClick={handleSignInPP}
+                            onClick={handleFinish}
+                            className="w-full py-2 px-4 border border-transparent rounded-md text-xl text-white bg-[#0C9BE7] hover:bg-[#007cbe] transition delay-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0C9BE7]"
+                        >
                             로그인
                         </button>
                         <div className="flex items-center justify-between">
@@ -125,7 +251,7 @@ const LoginContainer = () => {
                             outline
                             label="구글로 로그인하기"
                             icon={FcGoogle}
-                            onClick={handleSignIn}
+                            onClick={() => signIn("google")}
                         />
                         <hr />
                         <ul>

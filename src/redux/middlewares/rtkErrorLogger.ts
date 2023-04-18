@@ -1,5 +1,9 @@
-import { Modal } from "antd"
-import { Middleware, MiddlewareAPI, isRejectedWithValue } from "@reduxjs/toolkit"
+import { Modal } from "antd";
+import {
+    Middleware,
+    MiddlewareAPI,
+    isRejectedWithValue,
+} from "@reduxjs/toolkit";
 
 export const rtkErrorLogger: Middleware =
     (api: MiddlewareAPI) => (next) => (action) => {
@@ -8,15 +12,14 @@ export const rtkErrorLogger: Middleware =
                 if (action.payload.status === 404) {
                     return;
                 }
-                const modal = Modal.error({})
+                const modal = Modal.error({});
 
                 modal.update({
                     title: `error ${action.payload.data?.errCode}`,
-                    content: `${action?.payload.data?.errMsg}`
-                })
+                    content: `${action?.payload.data?.errMsg}`,
+                });
             }
         }
-        return next(action)
-    }
-
-export default {}
+        return next(action);
+    };
+export default {};

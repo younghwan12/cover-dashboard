@@ -1,24 +1,33 @@
 import { BreadCrumb } from "primereact/breadcrumb";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Select } from "antd";
+import { useAppSelector } from "@/redux/hooks";
 
 const { Option } = Select;
+
+interface MenuItem {
+    label: string;
+    url: string;
+}
 
 const Pagination = () => {
     //breadCrumb
     const router = useRouter();
-    const items = [
-        { label: "시스템 관리", url: "/sysMgt" },
-        { label: "코드정보", url: "/sysMgt/code" },
-        { label: "사용자", url: "/sysMgt/user" },
-        { label: "부서 관리", url: "/sysMgt/dept" },
-        { label: "로그아웃", url: "/logout" },
-    ];
+
+    const userInfoDetail = useAppSelector(
+        (state) => state.login.userInfoDetail
+    );
+
+    const menuItems: MenuItem[] = userInfoDetail?.menu.map((item) => ({
+        label: item.menu_name,
+        url: item.menu_location.replace("/service", ""),
+    }));
+
     const home = { icon: "pi pi-home", url: "/", label: "홈" };
     // URL에 맞는 한글명을 찾는 함수
     const findLabel = (url: string) => {
-        const found = items.find((item) => item.url === url);
+        const found = menuItems?.find((item) => item.url === url);
         return found ? found.label : "";
     };
 

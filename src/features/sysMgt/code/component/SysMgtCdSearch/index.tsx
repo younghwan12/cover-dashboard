@@ -1,13 +1,5 @@
 import { useState } from "react";
-import {
-    Button,
-    Form,
-    FormItem,
-    Input,
-    Search,
-    Space,
-    useForm,
-} from "@/common";
+import { Button, Form, FormItem, Input, Space, useForm } from "@/common";
 import {
     SearchForm,
     SearchFormBox,
@@ -69,12 +61,12 @@ const SysMgtCdSearch = () => {
                             </Space>
                         </FormItem>
                     </SearchFormBox>
-                    {/* <SearchFormControls form={form} /> */}
-                    <div className="flex items-center justify-center">
+                    <SearchFormControls form={form} />
+                    {/* <div className="flex items-center justify-center">
                         <Button type="primary" size="large" htmlType="submit">
                             검색
                         </Button>
-                    </div>
+                    </div> */}
                 </SearchForm>
             </Form>
         </>

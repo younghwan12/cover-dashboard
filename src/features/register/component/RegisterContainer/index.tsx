@@ -1,20 +1,14 @@
-import {
-    Form,
-    FormItem,
-    Input,
-    Search,
-    Button,
-    useForm,
-    Space,
-} from "@/common";
+import { Form, FormItem, Input, Button, useForm, Space } from "@/common";
 import {
     SearchForm,
     SearchFormBox,
     SearchFormControls,
 } from "@/components/search";
+import { useRouter } from "next/router";
 
 const RegisterContainer = () => {
     const [form] = useForm();
+    const router = useRouter();
 
     const handleFinish = (v) => {
         console.log(v);
@@ -120,7 +114,21 @@ const RegisterContainer = () => {
                                         </FormItem>
                                     </Space>
                                 </FormItem>
-                                <SearchFormControls form={form} />
+                                <Space className="flex items-center justify-center">
+                                    <Button
+                                        type="primary"
+                                        size="large"
+                                        htmlType="submit"
+                                    >
+                                        확인
+                                    </Button>
+                                    <Button
+                                        size="large"
+                                        onClick={() => router.push("/login")}
+                                    >
+                                        취소
+                                    </Button>
+                                </Space>
                             </SearchFormBox>
                         </SearchForm>
                     </Form>

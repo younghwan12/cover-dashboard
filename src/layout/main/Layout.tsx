@@ -1,37 +1,61 @@
 "use client";
 
+interface MenuItem {
+    label: string;
+    desc: string;
+    url: string;
+}
+
 interface LayoutProps {
     children: React.ReactNode;
 }
 
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
+import Header from "../header/Header";
+import { useAppSelector } from "@/redux/hooks";
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     const router = useRouter();
-    const items = [
-        { label: "시스템 관리", url: "/sysMgt" },
-        { label: "코드정보", url: "/sysMgt/code", desc: "코드정보 설명" },
-        { label: "사용자", url: "/sysMgt/user", desc: "사용자 설명" },
-        { label: "프로젝트", url: "/sysMgt/project", desc: "프로젝트 설명" },
-        { label: "설정", url: "/sysMgt/suljung", desc: "설정하는 화면입니다" },
-    ];
+
+    const userInfoDetail = useAppSelector(
+        (state) => state.login.userInfoDetail
+    );
+
+    const menuItems: MenuItem[] = userInfoDetail?.menu.map((item) => ({
+        label: item.menu_name,
+        desc: item.menu_desc,
+        url: item.menu_location.replace("/service", ""),
+    }));
+
     const currentUrl = router.pathname;
-    const currentItem = items.find((item) => item.url === currentUrl);
+    const currentItem = menuItems?.find((item) => item.url === currentUrl);
+
+    // `Header` 컴포넌트의 렌더링 여부를 결정하는 변수
+    const shouldRenderHeader =
+        router.pathname !== "/login" &&
+        router.pathname !== "/register" &&
+        router.pathname !== "/findUserId" &&
+        router.pathname !== "/lostPassword";
 
     return (
-        <div className="max-w-[2520px] pt-36 mx-auto xl:px-20 md:px-10 sm:px-2 px-4 relative items-center min-h-screen">
-            <div className="text-center ">
-                <h2 className="text-2xl font-medium">
-                    {currentItem ? currentItem.label : ""}
-                </h2>
-                <hr className=" w-[20px] mx-auto my-2 border-[#000]" />
-                <div className=" text-[#909090] font-light">
-                    {currentItem ? currentItem.desc : ""}
-                </div>
+        <>
+            {shouldRenderHeader && <Header />}
+            <div className="max-w-[2520px] pt-36 mx-auto xl:px-20 md:px-10 sm:px-2 px-4 relative items-center min-h-screen">
+                {currentItem && (
+                    <div className="text-center ">
+                        <h2 className="text-2xl font-medium">
+                            {currentItem ? currentItem.label : ""}
+                        </h2>
+                        <hr className=" w-[20px] mx-auto my-2 border-[#000]" />
+                        <div className=" text-[#909090] font-light">
+                            {currentItem ? currentItem.desc : ""}
+                        </div>
+                    </div>
+                )}
+                {children}
             </div>
-            {children}
-        </div>
+        </>
     );
 };
 

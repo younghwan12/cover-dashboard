@@ -1,37 +1,30 @@
-import { getServerSession } from "next-auth/next";
+import axios from "axios";
+import { parseCookies } from "nookies";
 
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
-
-export async function getSession() {
-    return await getServerSession(authOptions);
-}
-
-export default async function getCurrentUser() {
+const getCurrentUser = async () => {
     try {
-        const session = await getSession();
+        // get JWT from cookies
+        const cookies = parseCookies();
+        const token = cookies.jwt;
 
-        if (!session?.user?.email) {
+        // if JWT exists, make request to get current user
+        if (token) {
+            const response = await axios.get("/api/currentUser", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            // return user data
+            return response.data;
+        } else {
+            // if JWT doesn't exist, return null
             return null;
         }
-
-        // const currentUser = await prisma.user.findUnique({
-        //     where: {
-        //         email: session.user.email as string,
-        //     },
-        // });
-
-        // if (!currentUser) {
-        //     return null;
-        // }
-
-        return {
-            // ...currentUser,
-            // createdAt: currentUser.createdAt.toISOString(),
-            // updatedAt: currentUser.createdAt.toISOString(),
-            // emailVerified: currentUser.emailVerified?.toISOString() || null,
-            ...session.user,
-        };
-    } catch (error: any) {
+    } catch (error) {
+        console.error(error);
         return null;
     }
-}
+};
+
+export default getCurrentUser;

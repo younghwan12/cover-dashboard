@@ -8,8 +8,8 @@ export const authOptions: AuthOptions = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
         }),
     ],
-    session: { strategy: "jwt" },
-    secret: process.env.NEXTAUTH_SECRET,
+    // session: { strategy: "jwt" },
+    // secret: process.env.NEXTAUTH_SECRET,
 };
 
 export default (req, res) => NextAuth(req, res, authOptions);

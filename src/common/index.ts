@@ -8,7 +8,7 @@ export { default as Modal, useModal } from "./Modal";
 
 export { default as Space } from "./Space";
 
-export { AppCodeInput, default as Input, Password, Search } from "./Input";
+export { AppCodeInput, default as Input, Password } from "./Input";
 
 // export { default as DataTable } from "./DataTable";
 

@@ -1,13 +1,32 @@
 import React, { useEffect } from "react";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Container from "../Container";
 import Logo from "./Logo";
 import Navbar from "./Navbar";
 import Pagination from "./Pagination";
 import UserMenu from "./UserMenu";
-import { RootState } from "@/redux/store";
+import { parseCookies } from "nookies";
+import { getUserInfoDetail } from "@/features/login/redux/loginAction";
 
 const Header = () => {
+    const dispatch = useAppDispatch();
+    const token = useAppSelector((state) => state.login.userInfo);
+    const userInfoDetail = useAppSelector(
+        (state) => state.login.userInfoDetail
+    );
+
+    useEffect(() => {
+        if (token?.jwt) {
+            dispatch(
+                getUserInfoDetail({
+                    params: {
+                        jwt: token?.jwt,
+                    },
+                })
+            );
+        }
+    }, []);
+
     return (
         <>
             <div className="fixed left-0 top-0 min-w-full !z-50">
@@ -23,9 +42,9 @@ const Header = () => {
                 "
                         >
                             <Logo />
-                            <Navbar />
+                            <Navbar menu={userInfoDetail?.menu} />
                         </div>
-                        <UserMenu />
+                        <UserMenu userInfo={userInfoDetail} />
                     </Container>
                 </div>
                 <Pagination />
