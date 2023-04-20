@@ -74,7 +74,9 @@ body {
 .searchForm .ant-form-item-control {
     max-width: 450px; /* 적절한 크기로 수정해주세요 */
 }
-
+.ant-select-multiple .ant-select-selection-item-remove > .anticon {
+    vertical-align: 0;
+}
 /* modal */
 
 .ant-modal .ant-modal-header {

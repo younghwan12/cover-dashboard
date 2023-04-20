@@ -18,7 +18,7 @@ const FindIdContainer = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const checkEmail = () => {
-        if (email === "") {
+        if (email.trim() === "") {
             modal.error({
                 title: "메일을 입력해 주세요.",
             });

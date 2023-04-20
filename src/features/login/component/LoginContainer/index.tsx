@@ -6,7 +6,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { useRouter } from "next/router";
 // import { setSession } from "@/features/login/redux/loginSlice";
 import Link from "next/link";
-
+import nookies, { destroyCookie } from "nookies";
 import axios from "axios";
 
 import { parseCookies, setCookie } from "nookies";
@@ -18,68 +18,24 @@ const LoginContainer = () => {
     const [modal, contextHolder] = useModal();
     const dispatch = useAppDispatch();
     const router = useRouter();
-
     // 아이디와 패스워드 값을 상태로 관리
     const [userId, setUserId] = useState("");
     const [password, setPassword] = useState("");
+    const [idSave, setIdSave] = useState(false);
 
-    const handleSignInPP = () => {
-        console.log("userId: ", userId);
-        console.log("password: ", password);
+    // id저장 쿠키 확인
+    const cookies = parseCookies();
+    const storedUserId = cookies.userId;
 
-        // 아이디와 패스워드 값을 서버로 전송하는 API 요청 코드
-        //FIXME - BE 주소를 설정값으로 뺄것, id&pwd 하드코딩
-        //BE주소: http://coverdreamit.co.kr:7001
-        axios
-            .get(
-                "http://coverdreamit.co.kr:7001" +
-                    "/PortalCommon/login/?user_id=admin&pwd=11111111",
-                {}
-            )
-            .then((response) => {
-                //로그인 성공 시 인증 토큰 얻어옴, 인증 토큰을 얻어서 기존에는 쿠키에 넣었는데 리액트에서는 리덕스?스토리지? ..어디?
-
-                // 로그인 처리 후 필요한 동작 수행
-                console.log(response.data);
-
-                /*
-        기존 로그인 처리 프로세스...
-
-        var type = info.type;
-					
-        if(type == "notAuthError") {
-            loginAlert('권한이 지정되지 않았습니다. <br/>고객지원센터 관리자(nexcore4u@sk.com, 02-6400-6123)에게 문의하세요.','user_id');
-            return false;
-        } else if(type == "accountErr") {
-            loginAlert('잘못된 계정 또는 비밀번호입니다. <br/>입력 오류 5회 이상 시 계정이 비활성화됩니다.','user_id');
-            return false;
-        } else if (type == "activeNError") {
-            loginAlert('계정이 비활성화 상태입니다. <br/>고객지원센터 관리자(nexcore4u@sk.com, 02-6400-6123)에게 문의하세요.','user_id');
-            return false;
-        } else if (type == "activeNPwError") {
-            loginAlert('비밀번호 5회이상 입력오류로 계정이 비활성화 상태입니다. <br/>비밀번호 재발급 또는 고객지원센터 관리자(nexcore4u@sk.com, 02-6400-6123)에게 문의하세요.','user_id');
-            return false;
-        } else if (type == "activeWaitError") {
-            loginAlert('계정이 대기 상태입니다. <br/>고객지원센터 관리자(nexcore4u@sk.com, 02-6400-6123)에게 문의하세요.','user_id');
-            return false;
-        } else if (type == "success") {
-            
-            setCookie("jwt", info.jwt);
-            setCookie("fromLogin", "Y");
-
-            if(document.referrer.indexOf("resetPassword") > -1 || document.referrer.indexOf("lostPassword") > -1  || document.referrer.indexOf("findUserId") > -1) {
-                location.href = "/";
-            } else {
-                location.href = document.referrer;
-            } 
-            
+    useEffect(() => {
+        if (storedUserId) {
+            setUserId(storedUserId);
+            setIdSave(true);
         }
+    }, []);
 
-        */
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
+    const idSaveCheck = (e) => {
+        setIdSave(e.target.checked);
     };
 
     const handleKeyPress = async (
@@ -93,6 +49,17 @@ const LoginContainer = () => {
 
     const handleFinish = async () => {
         try {
+            if (idSave) {
+                setCookie(null, "userId", userId, {
+                    maxAge: 30 * 24 * 60 * 60, // 30일간 유지
+                    path: "/", // 전체 도메인에서 사용 가능하도록 설정
+                });
+            } else {
+                destroyCookie(null, "userId", {
+                    path: "/",
+                });
+            }
+
             const loginCheck = await dispatch(
                 getUserInfo({
                     params: {
@@ -139,7 +106,6 @@ const LoginContainer = () => {
             console.log(error);
         }
     };
-
     // 구글 로그인방식
     // const { data: session, status } = useSession();
 
@@ -178,7 +144,7 @@ const LoginContainer = () => {
                                 <input
                                     id="id"
                                     name="id"
-                                    type="id"
+                                    type="text"
                                     value={userId}
                                     onChange={(e) => setUserId(e.target.value)}
                                     autoComplete="id"
@@ -205,7 +171,8 @@ const LoginContainer = () => {
                                     onChange={(e) =>
                                         setPassword(e.target.value)
                                     }
-                                    onKeyPress={handleKeyPress}
+                                    onKeyDown={handleKeyPress}
+                                    // onKeyPress={handleKeyPress}
                                     autoComplete="current-password"
                                     required
                                     placeholder="비밀번호를 입력하세요."
@@ -226,6 +193,8 @@ const LoginContainer = () => {
                                     id="remember_me"
                                     name="remember_me"
                                     type="checkbox"
+                                    checked={idSave}
+                                    onChange={idSaveCheck}
                                     className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                                 />
                                 <label

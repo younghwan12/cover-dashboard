@@ -1,4 +1,5 @@
 import { Form, FormItem, Input, Button, useForm, Space } from "@/common";
+import { Option, Select } from "@/common/Select";
 import {
     SearchForm,
     SearchFormBox,
@@ -39,27 +40,35 @@ const RegisterContainer = () => {
                     <Form
                         form={form}
                         onFinish={handleFinish}
-                        className="border border-[#cdcdcd] px-5 py-3 mt-5 rounded"
+                        className="border border-[#cdcdcd] px-7 py-5 mt-5 rounded-xl"
                     >
                         <SearchForm>
                             <SearchFormBox>
                                 <FormItem label="사용자 ID" required={true}>
-                                    <Space className="">
-                                        <FormItem name="title" className="mb-0">
-                                            {/* <Search /> */}
+                                    <Space className="mr-5">
+                                        <FormItem
+                                            name="title"
+                                            className="mb-0 w-80"
+                                        >
                                             <Input placeholder="사용자 id를 입력하세요" />
                                         </FormItem>
-                                        <Button>중복확인</Button>
                                     </Space>
+                                    <Button>중복확인</Button>
                                 </FormItem>
                                 <FormItem label="비밀번호" required={true}>
-                                    <Space>
+                                    <Space className="relative">
                                         <FormItem
                                             name="password"
-                                            className="mb-0"
+                                            className="mb-0 w-80"
                                         >
-                                            {/* <Search /> */}
-                                            <Input placeholder="비밀번호를 입력하세요" />
+                                            <Space className="block">
+                                                <Input placeholder="비밀번호를 입력하세요" />
+                                                <p className="text-xs mt-1 whitespace-nowrap text-gray-500">
+                                                    최소한 8글자 이상,
+                                                    특수문자/영문/숫자 모두
+                                                    포함되어야 합니다.
+                                                </p>
+                                            </Space>
                                         </FormItem>
                                     </Space>
                                 </FormItem>
@@ -67,7 +76,7 @@ const RegisterContainer = () => {
                                     <Space>
                                         <FormItem
                                             name="passwordCheck"
-                                            className="mb-0"
+                                            className="mb-0 w-80"
                                         >
                                             <Input placeholder="비밀번호를 입력하세요" />
                                         </FormItem>
@@ -75,15 +84,21 @@ const RegisterContainer = () => {
                                 </FormItem>
                                 <FormItem label="이름" required={true}>
                                     <Space>
-                                        <FormItem name="name" className="mb-0">
-                                            <Input placeholder="비밀번호를 입력하세요" />
+                                        <FormItem
+                                            name="name"
+                                            className="mb-0 w-80"
+                                        >
+                                            <Input placeholder="이름을 입력하세요" />
                                         </FormItem>
                                     </Space>
                                 </FormItem>
                                 <FormItem label="메일" required={true}>
                                     <Space>
-                                        <FormItem name="email" className="mb-0">
-                                            <Input placeholder="비밀번호를 입력하세요" />
+                                        <FormItem
+                                            name="email"
+                                            className="mb-0 w-80"
+                                        >
+                                            <Input placeholder="메일을 입력하세요" />
                                         </FormItem>
                                     </Space>
                                 </FormItem>
@@ -91,16 +106,19 @@ const RegisterContainer = () => {
                                     <Space>
                                         <FormItem
                                             name="company"
-                                            className="mb-0"
+                                            className="mb-0 w-80"
                                         >
-                                            <Input placeholder="비밀번호를 입력하세요" />
+                                            <Input placeholder="회사를 입력하세요" />
                                         </FormItem>
                                     </Space>
                                 </FormItem>
                                 <FormItem label="연락처" required={true}>
                                     <Space>
-                                        <FormItem name="phone" className="mb-0">
-                                            <Input placeholder="비밀번호를 입력하세요" />
+                                        <FormItem
+                                            name="phone"
+                                            className="mb-0 w-80"
+                                        >
+                                            <Input placeholder="연락처를 입력하세요" />
                                         </FormItem>
                                     </Space>
                                 </FormItem>
@@ -108,9 +126,39 @@ const RegisterContainer = () => {
                                     <Space>
                                         <FormItem
                                             name="project"
-                                            className="mb-0"
+                                            className="mb-0 w-80"
                                         >
-                                            <Input placeholder="비밀번호를 입력하세요" />
+                                            <Space className="block">
+                                                <Input placeholder="프로젝트를 입력하세요" />
+                                                <p className="text-xs mt-1 whitespace-nowrap text-gray-500">
+                                                    사업년도 / 고객사명 /
+                                                    프로젝트명 으로 입력해
+                                                    주세요.
+                                                </p>
+                                            </Space>
+                                        </FormItem>
+                                    </Space>
+                                </FormItem>
+                                <FormItem
+                                    label="피엠에스플러스 사용 제품"
+                                    required={true}
+                                >
+                                    <Space>
+                                        <FormItem
+                                            name="pmsplus"
+                                            className="mb-0 w-80"
+                                        >
+                                            <Select mode="multiple">
+                                                <Option value="J2EE Framework">
+                                                    J2EE Framework
+                                                </Option>
+                                                <Option value="C Framework">
+                                                    C Framework
+                                                </Option>
+                                                <Option value="D Framework">
+                                                    C Framework
+                                                </Option>
+                                            </Select>
                                         </FormItem>
                                     </Space>
                                 </FormItem>

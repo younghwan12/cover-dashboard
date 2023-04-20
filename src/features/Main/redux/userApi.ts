@@ -16,6 +16,7 @@ const profileApi = appTaggedApi.injectEndpoints({
             providesTags: () => [{ type: "Profile" }],
         }),
     }),
+    overrideExisting: true,
 });
 
 export default profileApi;
