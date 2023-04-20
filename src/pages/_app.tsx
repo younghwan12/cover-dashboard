@@ -8,26 +8,22 @@ import { Provider } from "react-redux";
 import Header from "../layout/header/Header";
 import { store, persistor } from "../redux/store";
 import { PersistGate } from "redux-persist/integration/react";
+import Head from "next/head";
 
 const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
     const router = useRouter();
 
-    // `Header` 컴포넌트의 렌더링 여부를 결정하는 변수
-    // const shouldRenderHeader =
-    //     router.pathname !== "/login" &&
-    //     router.pathname !== "/register" &&
-    //     router.pathname !== "/findUserId" &&
-    //     router.pathname !== "/lostPassword";
-
     return (
         <>
+            <Head>
+                <title>PMS helpdesk</title>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
-                    <SessionProvider session={session}>
-                        {/* {shouldRenderHeader && <Header />} */}
-                        {/* <Header /> */}
-                        <Component {...pageProps} />
-                    </SessionProvider>
+                    {/* <SessionProvider session={session}> */}
+                    <Component {...pageProps} />
+                    {/* </SessionProvider> */}
                 </PersistGate>
             </Provider>
         </>

@@ -34,24 +34,34 @@ const Navbar = ({ menu }) => {
                                             </Link>
                                         </div>
                                         {subMenus.length > 0 && (
-                                            <div className="hidden absolute py-2 px-3 left-0 top-full peer-hover:flex hover:flex w-48 flex-col bg-white shadow-md border-t-[3px] border-[#0072bb] z-[10] transform translate-y-30 transition-all duration-500 ease-out">
-                                                {subMenus.map((subItem) => (
-                                                    <Link
-                                                        key={subItem.menu_id}
-                                                        className={`${
-                                                            router.pathname ===
-                                                            subItem.menu_location
-                                                                ? "text-[#0072bb]"
-                                                                : "text-gray-400"
-                                                        } py-2.5 hover:text-[#0072bb] font-medium text-sm`}
-                                                        href={subItem.menu_location.replace(
-                                                            "/service",
-                                                            ""
-                                                        )}
-                                                    >
-                                                        {subItem.menu_name}
-                                                    </Link>
-                                                ))}
+                                            <div className="hidden absolute py-2 px-3 left-0 top-full peer-hover:flex hover:flex w-48 flex-col bg-white shadow-md border-t-[3px] border-[#0072bb] z-[10]">
+                                                {subMenus.map(
+                                                    (subItem, index) => (
+                                                        <Link
+                                                            key={
+                                                                subItem.menu_id
+                                                            }
+                                                            className={`${
+                                                                router.pathname ===
+                                                                subItem.menu_location
+                                                                    ? "text-[#0072bb]"
+                                                                    : "text-gray-400"
+                                                            } py-2.5 hover:text-[#0072bb] font-medium text-sm ${
+                                                                index !==
+                                                                subMenus.length -
+                                                                    1
+                                                                    ? "border-b-[1px]"
+                                                                    : ""
+                                                            }`}
+                                                            href={subItem.menu_location.replace(
+                                                                "/service",
+                                                                ""
+                                                            )}
+                                                        >
+                                                            {subItem.menu_name}
+                                                        </Link>
+                                                    )
+                                                )}
                                             </div>
                                         )}
                                     </div>

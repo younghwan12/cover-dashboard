@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+    box-sizing: border-box;
+}
+
 html {
     height: 100vh;
 }
@@ -27,4 +31,77 @@ body {
 .ant-btn-primary {
     border: 1px solid #d9d9d9;
     color: #000;
+}
+
+/* input 아이콘 위치조정 */
+.ant-input-affix-wrapper .ant-input-clear-icon {
+    transform: translateY(-15%);
+}
+
+.anticon.anticon-close.ant-modal-close-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ant-row {
+    justify-content: space-between;
+}
+/* 라벨 옆에 : 표시 */
+.ant-form-item .ant-form-item-label > label::after {
+    display: none;
+}
+
+.ant-form-item {
+    margin-bottom: 10px;
+}
+
+/* 마우스불가표시 */
+.ant-input[disabled],
+.ant-input-affix-wrapper-disabled,
+.ant-input-affix-wrapper[disabled] {
+    cursor: default;
+}
+.ant-btn-primary {
+    background-color: #00aaff;
+    color: #fff;
+}
+.ant-btn-primary:hover {
+    background-color: #0055ff;
+    color: #fff;
+}
+
+.searchForm .ant-form-item-control {
+    max-width: 450px; /* 적절한 크기로 수정해주세요 */
+}
+
+/* modal */
+
+.ant-modal .ant-modal-header {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab,
+.ant-tabs-card > div > .ant-tabs-nav .ant-tabs-tab {
+    border: 1px solid #ccc;
+    border-bottom: none;
+}
+
+/* primereact dataTable */
+.datatable-custom {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+}
+
+.datatable-custom th,
+.datatable-custom td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+.datatable-custom th {
+    background-color: #f2f2f2;
 }

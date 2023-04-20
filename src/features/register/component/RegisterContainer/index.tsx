@@ -124,7 +124,7 @@ const RegisterContainer = () => {
                                     </Button>
                                     <Button
                                         size="large"
-                                        onClick={() => router.push("/login")}
+                                        onClick={() => router.push("/")}
                                     >
                                         취소
                                     </Button>

@@ -2,9 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import appApi from "./appApi";
 import { rtkErrorLogger } from "./middlewares/rtkErrorLogger";
-import authSlice from "@/features/login/redux/loginSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
+
+import authSlice from "@/features/login/redux/loginSlice";
+import userSlice from "@/features/main/redux/userSlice";
 
 const persistConfig = {
     key: "root",
@@ -14,6 +16,7 @@ const persistConfig = {
 const reducers = combineReducers({
     [appApi.reducerPath]: appApi.reducer,
     login: authSlice,
+    profile: userSlice,
     // auth: authSlice.reducer,
 });
 
@@ -29,6 +32,7 @@ export const store = configureStore({
         })
             .concat(appApi.middleware)
             .concat(rtkErrorLogger),
+    devTools: false,
 });
 
 export const persistor = persistStore(store);

@@ -16,7 +16,7 @@ const Header = () => {
     );
 
     useEffect(() => {
-        if (token?.jwt) {
+        if (token?.jwt && !userInfoDetail) {
             dispatch(
                 getUserInfoDetail({
                     params: {
@@ -25,11 +25,11 @@ const Header = () => {
                 })
             );
         }
-    }, []);
+    }, [token?.jwt, userInfoDetail]);
 
     return (
         <>
-            <div className="fixed left-0 top-0 min-w-full !z-50">
+            <header className="fixed left-0 top-0 min-w-full !z-50">
                 <div className="py-4 border-t-[4px] border-[#0072bb] bg-white">
                     <Container>
                         <div
@@ -48,7 +48,7 @@ const Header = () => {
                     </Container>
                 </div>
                 <Pagination />
-            </div>
+            </header>
         </>
     );
 };

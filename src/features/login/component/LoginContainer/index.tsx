@@ -82,6 +82,15 @@ const LoginContainer = () => {
             });
     };
 
+    const handleKeyPress = async (
+        event: React.KeyboardEvent<HTMLInputElement>
+    ) => {
+        if (event.key === "Enter") {
+            // 엔터키를 눌렀을 때
+            await handleFinish(); // handleFinish 함수 실행
+        }
+    };
+
     const handleFinish = async () => {
         try {
             const loginCheck = await dispatch(
@@ -124,7 +133,7 @@ const LoginContainer = () => {
                         "고객지원센터 관리자(nexcore4u@sk.com, 02-6400-6123)에게 문의하세요.",
                 });
             } else if (payload.type === "success") {
-                router.push("/");
+                router.push("/dashboard");
             }
         } catch (error) {
             console.log(error);
@@ -132,17 +141,17 @@ const LoginContainer = () => {
     };
 
     // 구글 로그인방식
-    const { data: session, status } = useSession();
+    // const { data: session, status } = useSession();
 
-    useEffect(() => {
-        if (status === "authenticated") {
-            router.push("/");
-        }
-    }, [status, router]);
+    // useEffect(() => {
+    //     if (status === "authenticated") {
+    //         router.push("/");
+    //     }
+    // }, [status, router]);
 
-    if (status === "loading" || session) {
-        return null; // 로딩 중이거나 이미 로그인 된 경우, 렌더링하지 않음
-    }
+    // if (status === "loading" || session) {
+    //     return null; // 로딩 중이거나 이미 로그인 된 경우, 렌더링하지 않음
+    // }
 
     return (
         <div className="min-h-screen flex flex-col py-12 sm:px-6 lg:px-8">
@@ -196,6 +205,7 @@ const LoginContainer = () => {
                                     onChange={(e) =>
                                         setPassword(e.target.value)
                                     }
+                                    onKeyPress={handleKeyPress}
                                     autoComplete="current-password"
                                     required
                                     placeholder="비밀번호를 입력하세요."

@@ -1,4 +1,4 @@
-import { MainContainer } from "@/features/Main/component";
+import { MainContainer } from "@/features/main/component";
 import Layout from "@/layout/main/Layout";
 
 const MainPage = () => {

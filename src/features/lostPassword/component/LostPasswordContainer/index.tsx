@@ -1,4 +1,3 @@
-import Button from "@/components/Button";
 import React, { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { signIn, useSession } from "next-auth/react";
@@ -12,7 +11,7 @@ const LostPasswordContainer = () => {
     const router = useRouter();
 
     // 구글 로그인방식
-    const { data: session, status } = useSession();
+    // const { data: session, status } = useSession();
 
     const handleSignIn = () => {
         signIn("google");
@@ -24,9 +23,9 @@ const LostPasswordContainer = () => {
         }
     }, [status, router]);
 
-    if (status === "loading" || session) {
-        return null; // 로딩 중이거나 이미 로그인 된 경우, 렌더링하지 않음
-    }
+    // if (status === "loading" || session) {
+    //     return null; // 로딩 중이거나 이미 로그인 된 경우, 렌더링하지 않음
+    // }
 
     return (
         <div className="min-h-screen flex flex-col py-12 sm:px-6 lg:px-8">
