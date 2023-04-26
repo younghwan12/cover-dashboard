@@ -5,7 +5,7 @@ import React from "react";
 
 const Footer = () => {
     return (
-        <footer className="fixed left-0 bottom-0 bg-[#3b3b3b] min-w-full py-5 mx-auto xl:px-20 md:px-10 sm:px-2 px-4 flex items-center text-[#a5a5a5] text-sm">
+        <footer className="mt-10 bg-[#3b3b3b] min-w-full py-5 mx-auto xl:px-20 md:px-10 sm:px-2 px-4 flex items-center text-[#a5a5a5] text-sm">
             <h3>
                 <Image
                     alt="logo_fot"

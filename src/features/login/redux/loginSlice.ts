@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getUserInfo, getUserInfoDetail } from "./loginAction";
 import { initialState } from "./loginState";
 import { destroyCookie, setCookie } from "nookies";
-
+import { persistor } from "@/redux/store";
 export const loginSlice = createSlice({
     name: "login",
     initialState,
@@ -10,8 +10,13 @@ export const loginSlice = createSlice({
         logout: (state) => {
             // 로그아웃 로직
             destroyCookie(null, "jwt");
-            state.userInfo = null;
-            state.userInfoDetail = null;
+            return {
+                ...state,
+                userInfo: null,
+                userInfoDetail: null,
+            };
+            // state.userInfo = null;
+            // state.userInfoDetail = null;
         },
     },
     extraReducers: (builder) => {

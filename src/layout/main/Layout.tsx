@@ -51,9 +51,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <>
             <Header />
             {/* min-h-screen */}
-            <div className="max-w-[2520px] pt-36 mx-auto xl:px-20 md:px-10 sm:px-2 px-4 relative items-center">
+            <div className="max-w-[2520px] min-h-screen pt-36 mx-auto xl:px-20 md:px-10 sm:px-2 px-4 relative items-center">
                 {currentItem && (
-                    <div className="text-center ">
+                    <div className="text-center mt-10">
                         <h2 className="text-2xl font-medium">
                             {selectedMenuItem ? selectedMenuItem.label : ""}
                         </h2>

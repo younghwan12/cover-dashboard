@@ -28,14 +28,6 @@ const UserMenu = ({ userInfo }) => {
         });
     };
 
-    // getUserProfile({
-    //     params: {
-    //         user_id: userInfoDetail.jwt.user_id,
-    //         jwt: token.jwt,
-    //         login_id: userInfoDetail.jwt.user_id,
-    //     },
-    // })
-
     const onClickUserInfo = () => {
         setVisible(true);
     };

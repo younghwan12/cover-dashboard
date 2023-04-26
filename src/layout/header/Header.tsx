@@ -16,7 +16,7 @@ const Header = () => {
     );
 
     useEffect(() => {
-        if (token?.jwt && !userInfoDetail) {
+        if (token?.jwt) {
             dispatch(
                 getUserInfoDetail({
                     params: {
@@ -25,7 +25,7 @@ const Header = () => {
                 })
             );
         }
-    }, [token?.jwt, userInfoDetail]);
+    }, [token?.jwt]);
 
     return (
         <>

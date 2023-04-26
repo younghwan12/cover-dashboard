@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const VisitorContent = () => {
     return (
-        <div className="text-center">
+        <div className="text-center mt-8">
             <h2 className="text-4xl">환영합니다</h2>
             <hr className=" w-[130px] mx-auto my-5 border-[#e5e5e5]" />
             <div>
@@ -11,10 +11,17 @@ const VisitorContent = () => {
                 <br />
                 <p>피엠에스플러스 고객지원센터에 오신걸 환영합니다.</p>
                 <p>
-                    유지보수 및 기술지원 요청을 위해서는 회원가입을 먼저
-                    해주시고
+                    유지보수 및 기술지원 요청을 위해서는
+                    <span className="bg-[#fff568] py-1 px-2">회원가입</span>을
+                    먼저 해주시고
                 </p>
-                <p>우측 상단의 프로젝트 선택 후 문의 사항을 남겨주세요.</p>
+                <p>
+                    우측 상단의
+                    <span className="bg-[#fff568] py-1 px-2">
+                        프로젝트 선택
+                    </span>{" "}
+                    후 문의 사항을 남겨주세요.
+                </p>
                 <br />
                 <p>감사합니다.</p>
             </div>
