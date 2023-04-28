@@ -30,7 +30,7 @@ const ProjectMgtSearch = () => {
 
     const [form] = useForm();
     const dispatch = useAppDispatch();
-    const [rangePickerDisabled, setRangePickerDisabled] = useState(false);
+    const [rangePickerDisabled, setRangePickerDisabled] = useState(true);
 
     const handleFinish = (v) => {
         // dispatch(
@@ -46,7 +46,11 @@ const ProjectMgtSearch = () => {
     };
 
     const allDatePicker = (e) => {
-        setRangePickerDisabled(e.target.checked);
+        if (e.target.checked) {
+            setRangePickerDisabled(true);
+        } else {
+            setRangePickerDisabled(false);
+        }
     };
 
     return (
@@ -104,14 +108,13 @@ const ProjectMgtSearch = () => {
                                     <Space className="ml-5">
                                         <FormItem name="srch_auth">
                                             <RangePicker
-                                                // cellRender={dateCellRender}
-                                                // monthCellRender={
-                                                //     monthCellRender
-                                                // }
                                                 disabled={rangePickerDisabled}
                                             />
                                         </FormItem>
-                                        <Checkbox onChange={allDatePicker} />
+                                        <Checkbox
+                                            onChange={allDatePicker}
+                                            defaultChecked
+                                        />
                                         <div>전체기간</div>
                                     </Space>
                                 </FormItem>

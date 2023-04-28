@@ -7,12 +7,18 @@ import {
 } from "@/components/search";
 import { useRouter } from "next/router";
 import { useAppDispatch } from "@/redux/hooks";
-import React from "react";
+import React, { useEffect } from "react";
 import { setSearchParams } from "../../redux/codeSlice";
 import { CodeMgtReq } from "../../types";
 const CodeMgtSearch = () => {
     const [form] = useForm();
     const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        form.setFieldsValue({
+            srch_code_group_id: "",
+        });
+    }, []);
 
     const handleFinish = (v: CodeMgtReq) => {
         dispatch(
@@ -35,10 +41,7 @@ const CodeMgtSearch = () => {
                                 <FormItem className="mr-28" label="그룹코드명">
                                     <Space className="ml-5">
                                         <FormItem name="srch_code_group_id">
-                                            <Select
-                                                className="min-w-[200px]"
-                                                defaultValue=""
-                                            >
+                                            <Select className="min-w-[200px]">
                                                 <Option value="">(All)</Option>
                                                 <Option value="GROUP_SOLUTION">
                                                     그룹솔루션

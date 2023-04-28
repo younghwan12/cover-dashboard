@@ -9,13 +9,13 @@ export interface DashboardReq extends LogEx {
 }
 
 export interface DashboardResList {
-    list: List[];
+    list: DashboardList[];
 }
 
-export interface List {
-    all_cnt: Number;
-    charger_ing_cnt: Number;
-    code_name: string;
-    complete_cnt: Number;
-    request_cnt: Number;
+export interface DashboardList {
+    all_cnt: number;
+    charger_ing_cnt: number;
+    code_name?: string;
+    complete_cnt: number;
+    request_cnt: number;
 }

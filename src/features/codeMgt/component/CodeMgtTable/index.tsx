@@ -9,8 +9,13 @@ import {
     DataTableSelectionChangeEvent,
 } from "primereact/datatable";
 import { Paginator } from "primereact/paginator";
-import { useLazyGetCodeListQuery } from "../../redux/codeApi";
-import { List } from "../../types";
+import {
+    useDelCodeListMutation,
+    useLazyGetCodeListQuery,
+} from "../../redux/codeApi";
+import { DelCodeMgtReq, List } from "../../types";
+import { Button } from "antd";
+import { AddCodeModal } from "@/features/modal";
 
 const CodeMgtTable = () => {
     const [first, setFirst] = useState(0);
@@ -18,7 +23,8 @@ const CodeMgtTable = () => {
     const [modal, contextHolder] = useModal();
     const [selectedDatas, setSelectedDatas] = useState<
         DataTableSelection<List[]> | undefined
-    >();
+    >([]);
+    const [visible, setVisible] = useState(false);
 
     const token = useAppSelector((state) => state.login.userInfo);
     const userInfoDetail = useAppSelector(
@@ -29,13 +35,15 @@ const CodeMgtTable = () => {
 
     const [getCdList, { data: cdList, isFetching }] = useLazyGetCodeListQuery();
 
+    const [delCode] = useDelCodeListMutation();
+
     // 팝업 열리면 데이터 호출
     useEffect(() => {
         if (token && token?.jwt) {
             getCdList({
                 ...searchParams,
                 jwt: token.jwt,
-                login_id: userInfoDetail.jwt.user_id,
+                login_id: userInfoDetail?.jwt?.user_id,
                 page_startnum: 1,
                 page_endnum: 15,
             });
@@ -48,10 +56,49 @@ const CodeMgtTable = () => {
         getCdList({
             ...searchParams,
             jwt: token.jwt,
-            login_id: userInfoDetail.jwt.user_id,
+            login_id: userInfoDetail?.jwt?.user_id,
             page_startnum: e.first + 1,
             page_endnum: e.first + rows,
         });
+    };
+
+    // 생성모달
+    const addCode = () => {
+        setVisible(true);
+    };
+
+    const removeCode = () => {
+        if (Array.isArray(selectedDatas) && selectedDatas.length > 0) {
+            const selectnewData = selectedDatas.map(
+                ({ code_group_id, code_id }) => ({ code_group_id, code_id })
+            );
+            modal.confirm({
+                title: "삭제하시겠습니까?",
+                onOk() {
+                    const formData: DelCodeMgtReq = {
+                        delData: JSON.stringify(selectnewData),
+                        // delData: selectnewData,
+                        jwt: token.jwt,
+                        login_id: userInfoDetail.jwt.user_id,
+                    };
+                    delCode(formData)
+                        .unwrap()
+                        .then((data) => {
+                            modal.success({
+                                title: "삭제되었습니다.",
+                                onOk() {
+                                    setVisible(false);
+                                    setSelectedDatas([]);
+                                },
+                            });
+                        });
+                },
+            });
+        } else {
+            modal.error({
+                title: "선택된 항목이 없습니다.",
+            });
+        }
     };
 
     return (
@@ -59,9 +106,19 @@ const CodeMgtTable = () => {
             {/* <div className="mt-5 rounded-xl max-w-[80%] mx-auto border border-[#cdcdcd]"> */}
             {contextHolder}
             <div className="mt-5 rounded-xl max-w-[85%] mx-auto">
-                <div className="pt-7">
-                    코드 정보 (전체
-                    {`${cdList?.recordsTotal ?? cdList?.recordsTotal}`}건)
+                <div className="pt-7 flex justify-between items-center ">
+                    <div>
+                        코드 정보 (전체
+                        {`${cdList?.recordsTotal ?? cdList?.recordsTotal}`}건)
+                    </div>
+                    <div className="mb-1">
+                        <Button type="primary" size="middle" onClick={addCode}>
+                            등록
+                        </Button>
+                        <Button className="ml-2" onClick={removeCode}>
+                            삭제
+                        </Button>
+                    </div>
                 </div>
                 <DataTable
                     className="datatable-custom"
@@ -99,6 +156,7 @@ const CodeMgtTable = () => {
                 />
             </div>
             {/* </div> */}
+            <AddCodeModal visible={visible} setVisible={setVisible} />
         </>
     );
 };

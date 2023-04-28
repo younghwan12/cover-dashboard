@@ -7,7 +7,7 @@ import {
 } from "@/components/search";
 import { useRouter } from "next/router";
 import { useAppDispatch } from "@/redux/hooks";
-import React from "react";
+import React, { useEffect } from "react";
 const IssuesSearch = () => {
     const [form] = useForm();
     const dispatch = useAppDispatch();
@@ -19,6 +19,14 @@ const IssuesSearch = () => {
         //     })
         // );
     };
+
+    useEffect(() => {
+        form.setFieldsValue({
+            srch_issue_request_type: "",
+            srch_issue_status: "",
+            srch_charger: "",
+        });
+    }, []);
 
     return (
         <>
@@ -33,10 +41,7 @@ const IssuesSearch = () => {
                                 <FormItem label="요청사항">
                                     <Space className="ml-5">
                                         <FormItem name="srch_issue_request_type">
-                                            <Select
-                                                className="min-w-[200px]"
-                                                defaultValue=""
-                                            >
+                                            <Select className="min-w-[200px]">
                                                 <Option value="">(All)</Option>
                                                 <Option value="001">
                                                     기술 문의
@@ -68,11 +73,8 @@ const IssuesSearch = () => {
                                 </FormItem>
                                 <FormItem label="상태">
                                     <Space className="ml-5">
-                                        <FormItem name="srch_issue_request_type">
-                                            <Select
-                                                className="min-w-[200px]"
-                                                defaultValue=""
-                                            >
+                                        <FormItem name="srch_issue_status">
+                                            <Select className="min-w-[200px]">
                                                 <Option value="">(All)</Option>
                                                 <Option value="001">
                                                     요청중
@@ -93,10 +95,7 @@ const IssuesSearch = () => {
                                 <FormItem label="담당자">
                                     <Space className="ml-5">
                                         <FormItem name="srch_charger">
-                                            <Select
-                                                className="min-w-[200px]"
-                                                defaultValue=""
-                                            >
+                                            <Select className="min-w-[200px]">
                                                 <Option value="">(All)</Option>
                                                 <Option value="001">
                                                     NEXCORE J2EE Framework

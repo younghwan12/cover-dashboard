@@ -9,6 +9,9 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "../redux/store";
 
 import "primereact/resources/themes/lara-light-indigo/theme.css";
+// 한글
+import { ConfigProvider } from "antd";
+import koKR from "antd/locale/ko_KR";
 
 const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
     const router = useRouter();
@@ -22,7 +25,9 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
                     {/* <SessionProvider session={session}> */}
-                    <Component {...pageProps} />
+                    <ConfigProvider locale={koKR}>
+                        <Component {...pageProps} />
+                    </ConfigProvider>
                     {/* </SessionProvider> */}
                 </PersistGate>
             </Provider>

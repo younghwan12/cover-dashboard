@@ -1,8 +1,32 @@
 import { LogEx, Paging } from "@/common/types";
 
 export interface CodeMgtReq extends Paging, LogEx {
-    srch_code_group_id?: string;
-    srch_code_name?: string;
+    code_group_id?: string;
+    code_group_name?: string;
+    code_id?: string;
+    code_name?: string;
+    parent_code_group_id?: string;
+    mapping_code?: string;
+    code_order?: string;
+    use_yn?: string;
+}
+
+export interface AddCodeMgtReq extends LogEx {
+    code_group_id: string;
+    code_group_name: string;
+    code_id: string;
+    code_name: string;
+    parent_code_group_id: string;
+    mapping_code: string;
+    code_order: string;
+    use_yn: string;
+}
+export interface DelCodeMgtReq extends LogEx {
+    delData: DelList[] | string;
+}
+interface DelList {
+    code_group_id: string;
+    code_id: string;
 }
 
 export interface CodeMgtResList {

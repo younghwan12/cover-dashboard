@@ -17,3 +17,5 @@ export * from "./Tree";
 export * from "./Form";
 
 export * from "./Loader";
+
+export { default as RangePicker } from "./RangePicker";

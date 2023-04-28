@@ -1,6 +1,11 @@
 import qs from "query-string";
 import appApi from "@/redux/appApi";
-import { CodeMgtReq, CodeMgtResList } from "../types";
+import {
+    CodeMgtReq,
+    CodeMgtResList,
+    AddCodeMgtReq,
+    DelCodeMgtReq,
+} from "../types";
 
 const appTaggedApi = appApi.enhanceEndpoints({
     addTagTypes: ["CodeMgt"],
@@ -15,8 +20,41 @@ const codeMgtApi = appTaggedApi.injectEndpoints({
             }),
             providesTags: () => [{ type: "CodeMgt" }],
         }),
+        addCodeList: builder.mutation<CodeMgtResList, AddCodeMgtReq>({
+            query: (formData) => {
+                const encodedFormData = `${qs.stringify(formData)}`;
+                return {
+                    url: `/code/insert`,
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: encodedFormData,
+                };
+            },
+            invalidatesTags: () => [{ type: "CodeMgt" }],
+        }),
+        delCodeList: builder.mutation<CodeMgtResList, DelCodeMgtReq>({
+            query: (formData) => {
+                const encodedFormData = `${qs.stringify(formData)}`;
+                return {
+                    url: `/code/rowDelete`,
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: encodedFormData,
+                };
+            },
+            invalidatesTags: () => [{ type: "CodeMgt" }],
+        }),
     }),
+    overrideExisting: true,
 });
 
 export default codeMgtApi;
-export const { useLazyGetCodeListQuery } = codeMgtApi;
+export const {
+    useLazyGetCodeListQuery,
+    useAddCodeListMutation,
+    useDelCodeListMutation,
+} = codeMgtApi;
