@@ -29,6 +29,11 @@ interface DelList {
     code_id: string;
 }
 
+export interface DelCode extends LogEx {
+    code_group_id: string;
+    code_id: string;
+}
+
 export interface CodeMgtResList {
     list: List[];
     recordsTotal: number;

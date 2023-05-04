@@ -23,14 +23,6 @@ body {
     line-height: inherit !important;
 }
 
-.ant-btn-default {
-    margin-right: 3px;
-}
-
-.ant-btn-primary {
-    border: 1px solid #d9d9d9;
-    color: #000;
-}
 .circle {
     width: 100px;
     height: 100px;
@@ -60,7 +52,11 @@ body {
 .ant-form-item {
     margin-bottom: 10px;
 }
-
+.ant-descriptions-item-label.required-label::before {
+    content: "*";
+    color: #ff4d4f;
+    margin-right: 4px;
+}
 /* 마우스불가표시 */
 .ant-input[disabled],
 .ant-input-affix-wrapper-disabled,
@@ -68,12 +64,32 @@ body {
     cursor: default;
 }
 .ant-btn-primary {
+    border: 1px solid #d9d9d9;
     background-color: #00aaff;
     color: #fff;
 }
 .ant-btn-primary:hover {
+    border: 1px solid #d9d9d9;
     background-color: #0055ff;
     color: #fff;
+}
+.ant-input-affix-wrapper .ant-input-suffix {
+    align-items: flex-end;
+}
+
+.ant-btn-dashed {
+    border: 1px solid #d9d9d9;
+    background-color: #e87c87;
+    color: #fff;
+}
+.ant-btn-dashed:hover {
+    border: 1px solid #d9d9d9 !important;
+    background-color: #e66874 !important;
+    color: #fff !important;
+}
+
+.ant-btn-default {
+    margin-right: 3px;
 }
 
 .searchForm .ant-form-item-control {
@@ -145,4 +161,14 @@ body {
 }
 .p-datatable .p-datatable-thead > tr > th {
     padding: 0.7rem !important;
+}
+
+.ant-form-item.pre .ant-form-item-label > label {
+    height: inherit !important;
+    white-space: pre-wrap !important;
+    text-align: left !important;
+}
+
+.ant-space-align-center {
+    align-items: baseline !important;
 }

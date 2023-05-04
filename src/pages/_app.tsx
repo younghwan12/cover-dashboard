@@ -7,6 +7,7 @@ import "primereact/resources/primereact.min.css";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "../redux/store";
+// import "moment/locale/ko";
 
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 // 한글

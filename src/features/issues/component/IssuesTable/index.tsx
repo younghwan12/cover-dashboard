@@ -11,11 +11,16 @@ import {
 import { Paginator } from "primereact/paginator";
 import { IssuesList } from "../../types";
 import { useLazyGetIssuesMgtListQuery } from "../../redux";
+import { Button } from "antd";
+import { useRouter } from "next/router";
+import IssuesWriteModal from "@/features/modal/IssuesWriteModal";
 
 const IssuesTable = () => {
+    const router = useRouter();
     const [first, setFirst] = useState(0);
     const [rows, setRows] = useState(15);
     const [modal, contextHolder] = useModal();
+    const [visible, setVisible] = useState(false);
     const [selectedDatas, setSelectedDatas] = useState<
         DataTableSelection<IssuesList[]> | undefined
     >();
@@ -57,32 +62,42 @@ const IssuesTable = () => {
         });
     };
 
+    // const writeIssues = () => {
+    //     setVisible(true);
+    // };
+
     return (
         <>
-            {contextHolder}
             <div className="mt-5 rounded-xl max-w-[85%] mx-auto">
-                <div className="pt-7">
-                    문의 정보 (전체
-                    {`${issuesList?.recordsTotal ?? issuesList?.recordsTotal}`}
-                    건)
+                <div className="pt-7 flex justify-between items-center ">
+                    <div>
+                        문의 정보 (전체
+                        {`${
+                            issuesList?.recordsTotal ?? issuesList?.recordsTotal
+                        }`}
+                        건)
+                    </div>
+                    <div className="mb-1">
+                        <Button
+                            type="primary"
+                            size="middle"
+                            // onClick={writeIssues}
+                        >
+                            등록
+                        </Button>
+                        <Button className="ml-2">액셀다운로드</Button>
+                    </div>
                 </div>
                 <DataTable
                     className="datatable-custom"
                     stripedRows
+                    lazy
+                    rowHover
                     value={issuesList?.list}
                     loading={isFetching}
-                    selectionMode="checkbox"
-                    selection={selectedDatas}
-                    onSelectionChange={(
-                        e: DataTableSelectionChangeEvent<IssuesList[]>
-                    ) => setSelectedDatas(e.value)}
                     rows={rows}
                     scrollable
                 >
-                    <Column
-                        selectionMode="multiple"
-                        // headerStyle={{ width: "3rem" }}
-                    ></Column>
                     <Column field="no" header="No." />
                     <Column field="project_name" header="프로젝트명" />
                     <Column field="nexcore_solution_name" header="솔루션" />
@@ -102,6 +117,8 @@ const IssuesTable = () => {
                     onPageChange={onPageChange}
                 />
             </div>
+
+            {/* <IssuesWriteModal visible={visible} setVisible={setVisible} /> */}
         </>
     );
 };

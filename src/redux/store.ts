@@ -13,6 +13,7 @@ import { userMgtReducer } from "@/features/userMgt/redux";
 import { projectMgtReducer } from "@/features/projectMgt/redux";
 import { issuesMgtReducer } from "@/features/issues/redux";
 import { dashboardReducer } from "@/features/dashboard/redux";
+import sessionExpirationMiddleware from "./middlewares/sessionExpiration";
 
 const persistConfig = {
     key: "root",
@@ -43,6 +44,7 @@ export const store = configureStore({
             },
         })
             .concat(appApi.middleware)
+            .concat(sessionExpirationMiddleware)
             .concat(rtkErrorLogger),
     devTools: false,
 });

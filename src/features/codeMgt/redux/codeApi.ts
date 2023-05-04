@@ -5,6 +5,7 @@ import {
     CodeMgtResList,
     AddCodeMgtReq,
     DelCodeMgtReq,
+    DelCode,
 } from "../types";
 
 const appTaggedApi = appApi.enhanceEndpoints({
@@ -34,6 +35,35 @@ const codeMgtApi = appTaggedApi.injectEndpoints({
             },
             invalidatesTags: () => [{ type: "CodeMgt" }],
         }),
+        upDateCodeList: builder.mutation<CodeMgtResList, AddCodeMgtReq>({
+            query: (formData) => {
+                const encodedFormData = `${qs.stringify(formData)}`;
+                return {
+                    url: `/code/update`,
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: encodedFormData,
+                };
+            },
+            invalidatesTags: () => [{ type: "CodeMgt" }],
+        }),
+        delCode: builder.mutation<CodeMgtResList, DelCode>({
+            query: (formData) => {
+                const encodedFormData = `${qs.stringify(formData)}`;
+                return {
+                    url: `/code/delete`,
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: encodedFormData,
+                };
+            },
+            invalidatesTags: () => [{ type: "CodeMgt" }],
+        }),
+        // 다중삭제
         delCodeList: builder.mutation<CodeMgtResList, DelCodeMgtReq>({
             query: (formData) => {
                 const encodedFormData = `${qs.stringify(formData)}`;
@@ -56,5 +86,7 @@ export default codeMgtApi;
 export const {
     useLazyGetCodeListQuery,
     useAddCodeListMutation,
+    useDelCodeMutation,
+    useUpDateCodeListMutation,
     useDelCodeListMutation,
 } = codeMgtApi;

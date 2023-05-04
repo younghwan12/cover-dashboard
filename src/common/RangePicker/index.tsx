@@ -21,4 +21,6 @@ const RangePicker = React.forwardRef<any, CustomRangePickerProps>(
     }
 );
 
+RangePicker.displayName = "RangePicker";
+
 export default RangePicker;

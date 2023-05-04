@@ -18,4 +18,6 @@ export * from "./Form";
 
 export * from "./Loader";
 
+export * from "./TextArea";
+
 export { default as RangePicker } from "./RangePicker";

@@ -11,8 +11,11 @@ import {
 import { Paginator } from "primereact/paginator";
 import { ProjectList } from "../../types";
 import { useLazyGetProjectMgtListQuery } from "../../redux";
+import { Button } from "antd";
+import { AddProjectModal } from "@/features/modal";
 
 const ProjectMgtTable = () => {
+    const [visible, setVisible] = useState(false);
     const [first, setFirst] = useState(0);
     const [rows, setRows] = useState(15);
     const [modal, contextHolder] = useModal();
@@ -36,7 +39,7 @@ const ProjectMgtTable = () => {
             getProjectList({
                 ...searchParams,
                 jwt: token.jwt,
-                login_id: userInfoDetail.jwt.user_id,
+                login_id: userInfoDetail?.jwt?.user_id,
                 page_startnum: 1,
                 page_endnum: 15,
             });
@@ -55,20 +58,42 @@ const ProjectMgtTable = () => {
         });
     };
 
+    const addProject = () => {
+        setVisible(true);
+    };
+
     return (
         <>
             {contextHolder}
             <div className="mt-5 rounded-xl max-w-[85%] mx-auto">
-                <div className="pt-7">
-                    프로젝트 정보 (전체
-                    {`${
-                        projectList?.recordsTotal ?? projectList?.recordsTotal
-                    }`}
-                    건)
+                <div className="pt-7 flex justify-between items-center ">
+                    <div>
+                        프로젝트 정보 (전체
+                        {`${
+                            projectList?.recordsTotal ??
+                            projectList?.recordsTotal
+                        }`}
+                        건)
+                    </div>
+                    <div className="mb-1">
+                        <Button
+                            type="primary"
+                            size="middle"
+                            onClick={addProject}
+                        >
+                            등록
+                        </Button>
+                        <Button type="dashed" className="ml-1">
+                            삭제
+                        </Button>
+                        <Button className="ml-1">엑셀다운로드</Button>
+                    </div>
                 </div>
                 <DataTable
-                    className="datatable-custom"
+                    className="datatable-custom cursor-pointer"
                     stripedRows
+                    lazy
+                    rowHover
                     value={projectList?.list}
                     loading={isFetching}
                     selectionMode="checkbox"
@@ -111,6 +136,8 @@ const ProjectMgtTable = () => {
                     onPageChange={onPageChange}
                 />
             </div>
+
+            <AddProjectModal visible={visible} setVisible={setVisible} />
         </>
     );
 };

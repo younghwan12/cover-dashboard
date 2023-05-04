@@ -8,16 +8,21 @@ import { useModal } from "@/components/Modal";
 import { AuthInfo } from "@/features/main/types";
 import { Button } from "antd";
 
-import { useAddCodeListMutation } from "@/features/codeMgt/redux";
+import {
+    useAddCodeListMutation,
+    useDelCodeMutation,
+    useUpDateCodeListMutation,
+} from "@/features/codeMgt/redux";
 import { DefaultOptionType } from "antd/es/select";
-import { AddCodeMgtReq } from "@/features/codeMgt/types";
+import { AddCodeMgtReq, DelCode } from "@/features/codeMgt/types";
 
 interface IModalProps {
-    visible: boolean;
-    setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+    visible2: boolean;
+    setVisible2: React.Dispatch<React.SetStateAction<boolean>>;
+    rowData: any;
 }
 
-const AddCodeModal = ({ visible, setVisible }: IModalProps) => {
+const DetailCodeModal = ({ visible2, setVisible2, rowData }: IModalProps) => {
     const [form] = useForm();
     const [modal, contextHolder] = useModal();
     const [selectedDatas, setSelectedDatas] = useState([]);
@@ -29,18 +34,13 @@ const AddCodeModal = ({ visible, setVisible }: IModalProps) => {
         (state) => state.login.userInfoDetail
     );
 
-    const [addCode] = useAddCodeListMutation();
+    const [upDateCode] = useUpDateCodeListMutation();
+
+    const [delCode] = useDelCodeMutation();
 
     const handleFinish = (v) => {
-        console.log("v", v);
-        console.log("Selected value:", groupCdName);
-
         const regex = /^[0-9]*$/;
-        if (!v.code_id) {
-            modal.warning({
-                title: "코드ID를 입력해 주세요.",
-            });
-        } else if (!v.code_name) {
+        if (!v.code_name) {
             modal.warning({
                 title: "코드명을 입력해 주세요.",
             });
@@ -53,18 +53,6 @@ const AddCodeModal = ({ visible, setVisible }: IModalProps) => {
                 title: "정렬순서는 숫자만 입력해 주세요.",
             });
         } else {
-            // const formData = new FormData();
-            // formData.append("code_group_id", v.code_group_id);
-            // formData.append("code_group_name", groupCdName);
-            // formData.append("code_id", v.code_id);
-            // formData.append("code_name", v.code_name);
-            // formData.append("parent_code_group_id", "");
-            // formData.append("mapping_code", "");
-            // formData.append("code_order", v.code_order);
-            // formData.append("use_yn", v.use_yn);
-            // formData.append("jwt", token.jwt);
-            // formData.append("login_id", userInfoDetail.jwt.user_id);
-
             const formData: AddCodeMgtReq = {
                 ...v,
                 code_group_name: groupCdName,
@@ -77,13 +65,13 @@ const AddCodeModal = ({ visible, setVisible }: IModalProps) => {
             modal.confirm({
                 title: "저장하시겠습니까?",
                 onOk() {
-                    addCode(formData)
+                    upDateCode(formData)
                         .unwrap()
                         .then((data) => {
                             modal.success({
                                 title: "저장되었습니다.",
                                 onOk() {
-                                    setVisible(false);
+                                    setVisible2(false);
                                     form.resetFields();
                                 },
                             });
@@ -95,19 +83,45 @@ const AddCodeModal = ({ visible, setVisible }: IModalProps) => {
 
     useEffect(() => {
         form.setFieldsValue({
-            code_group_id: "GROUP_SOLUTION",
-            code_group_name: "그룹솔루션",
-            use_yn: "Y",
+            code_group_id: rowData.code_group_id,
+            code_id: rowData.code_id,
+            code_name: rowData.code_name,
+            code_order: rowData.code_order,
+            use_yn: rowData.use_yn,
         });
-    }, [visible]);
+    }, [visible2]);
 
     const modalOnCancelFun = () => {
-        setVisible(false);
+        setVisible2(false);
     };
 
     const modalOnOkFun = (r, e) => {
         form.submit();
         // setVisible(false);
+    };
+    const modalOnDeleteFun = () => {
+        const formData: DelCode = {
+            code_group_id: rowData.code_group_id,
+            code_id: rowData.code_id,
+            jwt: token.jwt,
+            login_id: userInfoDetail.jwt.user_id,
+        };
+
+        modal.confirm({
+            title: "삭제하시겠습니까?",
+            onOk() {
+                delCode(formData)
+                    .unwrap()
+                    .then((data) => {
+                        modal.success({
+                            title: "삭제되었습니다.",
+                            onOk() {
+                                setVisible2(false);
+                            },
+                        });
+                    });
+            },
+        });
     };
 
     const handleCodeGroupIdChange = (value, option) => {
@@ -119,7 +133,7 @@ const AddCodeModal = ({ visible, setVisible }: IModalProps) => {
             <Modal
                 title="코드 정보"
                 width={700}
-                open={visible}
+                open={visible2}
                 onCancel={() => modalOnCancelFun()}
                 onOk={(e) => modalOnOkFun(selectedDatas, e)}
                 footer={[
@@ -129,6 +143,13 @@ const AddCodeModal = ({ visible, setVisible }: IModalProps) => {
                         onClick={(e) => modalOnOkFun(selectedDatas, e)}
                     >
                         저장
+                    </Button>,
+                    <Button
+                        key="delete"
+                        type="dashed"
+                        onClick={() => modalOnDeleteFun()}
+                    >
+                        삭제
                     </Button>,
                     <Button key="close" onClick={() => modalOnCancelFun()}>
                         닫기
@@ -142,12 +163,7 @@ const AddCodeModal = ({ visible, setVisible }: IModalProps) => {
                             name="code_group_id"
                             required={true}
                         >
-                            <Select
-                                // onChange={(value, option: any) => {
-                                //     setgroupCdName(option?.label);
-                                // }}
-                                onChange={handleCodeGroupIdChange}
-                            >
+                            <Select onChange={handleCodeGroupIdChange} disabled>
                                 <Option value="GROUP_SOLUTION">
                                     그룹솔루션
                                 </Option>
@@ -163,7 +179,7 @@ const AddCodeModal = ({ visible, setVisible }: IModalProps) => {
                             <Input value={groupCdName} />
                         </FormItem>
                         <FormItem label="코드ID" name="code_id" required={true}>
-                            <Input />
+                            <Input disabled />
                         </FormItem>
                         <FormItem
                             label="코드명"
@@ -196,4 +212,4 @@ const AddCodeModal = ({ visible, setVisible }: IModalProps) => {
         </>
     );
 };
-export default AddCodeModal;
+export default DetailCodeModal;

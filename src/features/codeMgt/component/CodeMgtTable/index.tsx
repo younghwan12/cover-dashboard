@@ -15,7 +15,7 @@ import {
 } from "../../redux/codeApi";
 import { DelCodeMgtReq, List } from "../../types";
 import { Button } from "antd";
-import { AddCodeModal } from "@/features/modal";
+import { AddCodeModal, DetailCodeModal } from "@/features/modal";
 
 const CodeMgtTable = () => {
     const [first, setFirst] = useState(0);
@@ -25,6 +25,8 @@ const CodeMgtTable = () => {
         DataTableSelection<List[]> | undefined
     >([]);
     const [visible, setVisible] = useState(false);
+    const [visible2, setVisible2] = useState(false);
+    const [rowData, setRowData] = useState([]);
 
     const token = useAppSelector((state) => state.login.userInfo);
     const userInfoDetail = useAppSelector(
@@ -101,6 +103,11 @@ const CodeMgtTable = () => {
         }
     };
 
+    const rowClick = (e) => {
+        setRowData(e.data);
+        setVisible2(true);
+    };
+
     return (
         <>
             {/* <div className="mt-5 rounded-xl max-w-[80%] mx-auto border border-[#cdcdcd]"> */}
@@ -121,8 +128,10 @@ const CodeMgtTable = () => {
                     </div>
                 </div>
                 <DataTable
-                    className="datatable-custom"
+                    className="datatable-custom cursor-pointer"
                     stripedRows
+                    lazy
+                    rowHover
                     value={cdList?.list}
                     loading={isFetching}
                     selectionMode="checkbox"
@@ -131,6 +140,7 @@ const CodeMgtTable = () => {
                         e: DataTableSelectionChangeEvent<List[]>
                     ) => setSelectedDatas(e.value)}
                     rows={rows}
+                    onRowClick={(e) => rowClick(e)}
                 >
                     <Column
                         selectionMode="multiple"
@@ -157,6 +167,12 @@ const CodeMgtTable = () => {
             </div>
             {/* </div> */}
             <AddCodeModal visible={visible} setVisible={setVisible} />
+
+            <DetailCodeModal
+                visible2={visible2}
+                setVisible2={setVisible2}
+                rowData={rowData}
+            />
         </>
     );
 };
