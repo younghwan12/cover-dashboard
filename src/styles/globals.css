@@ -172,3 +172,35 @@ body {
 .ant-space-align-center {
     align-items: baseline !important;
 }
+
+/* editor-toolbar */
+.ql-editor {
+    min-height: 200px !important;
+}
+.ql-toolbar.ql-snow {
+    background-color: #fbf7f7;
+    border-radius: 5px 5px 0 0;
+}
+.ql-container.ql-snow {
+    border-radius: 0 0 5px 5px;
+}
+
+.ql-toolbar.ql-snow .ql-formats {
+    border: 1px solid #ccc;
+    border-radius: 5px !important;
+}
+
+.ql-formats button:last-child {
+    border: none;
+}
+
+.ql-formats button {
+    border-right: 1px solid #ccc !important;
+}
+
+.ant-descriptions.ant-descriptions-bordered .ant-descriptions-item-label {
+    text-align: center !important;
+}
+.ant-descriptions-item-content {
+    padding: 10px 12px !important;
+}

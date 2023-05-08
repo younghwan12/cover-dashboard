@@ -70,6 +70,10 @@ const AddProjectModal = ({ visible, setVisible }: IModalProps) => {
         // setVisible(false);
     };
 
+    useEffect(() => {
+        setSolutions([{ nexcore_solution_cd: "", solution_price: "" }]);
+    }, [visible]);
+
     const [solutions, setSolutions] = useState([
         { nexcore_solution_cd: "", solution_price: "" },
     ]);
