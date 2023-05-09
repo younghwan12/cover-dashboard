@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { combineReducers } from "redux";
+import { combineReducers } from "@reduxjs/toolkit";
 import appApi from "./appApi";
 import { rtkErrorLogger } from "./middlewares/rtkErrorLogger";
 import storage from "redux-persist/lib/storage";

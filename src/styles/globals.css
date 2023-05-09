@@ -150,6 +150,10 @@ body {
     border-right: none !important;
 }
 /* dataTable */
+.p-datatable.Tleft .p-datatable-tbody > tr > td:first-child,
+.p-datatable.Tleft .p-datatable-tbody > tr > td:last-child {
+    text-align: left !important;
+}
 .p-datatable .p-datatable-tbody > tr > td {
     border-right: 1px solid #ccc !important;
     padding: 0.5rem !important;
@@ -198,9 +202,21 @@ body {
     border-right: 1px solid #ccc !important;
 }
 
+.ant-descriptions.desLeft.ant-descriptions-bordered
+    .ant-descriptions-item-label {
+    width: 20%;
+}
 .ant-descriptions.ant-descriptions-bordered .ant-descriptions-item-label {
     text-align: center !important;
 }
+.ant-descriptions.issuesAdd .ant-descriptions-item-label {
+    width: 10%;
+    white-space: nowrap;
+}
 .ant-descriptions-item-content {
     padding: 10px 12px !important;
+}
+
+.ql-toolbar.ql-snow .ql-picker-label {
+    border-left: 1px solid #ccc !important;
 }

@@ -72,11 +72,13 @@ const DashboardTable = () => {
                 jwt: token?.jwt,
                 login_id: userInfoDetail?.jwt?.user_id,
             });
+
         }
     }, [token?.jwt, searchParams]);
 
     const createDataObject = (dashboardList) => {
         const labels = dashboardList.map((item) => item.code_name);
+        console.log(dashboardList, "dashboardList")
 
         const data = {
             labels,

@@ -1,4 +1,8 @@
-"use client";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+import Header from "../header/Header";
+import { useAppSelector } from "@/redux/hooks";
+import Footer from "../footer/Footer";
 
 interface MenuItem {
     label: string;
@@ -10,12 +14,6 @@ interface MenuItem {
 interface LayoutProps {
     children: React.ReactNode;
 }
-
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import Header from "../header/Header";
-import { useAppSelector } from "@/redux/hooks";
-import Footer from "../footer/Footer";
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     const router = useRouter();
@@ -41,11 +39,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     }
 
     // `Header` 컴포넌트의 렌더링 여부를 결정하는 변수
-    // const shouldRenderHeader =
-    //     router.pathname !== "/login" &&
-    //     router.pathname !== "/register" &&
-    //     router.pathname !== "/findUserId" &&
-    //     router.pathname !== "/lostPassword";
+    const shouldRenderHr = router.pathname !== "/";
+
+    const isIssuesPage =
+        currentUrl === "/issuesAdd" || currentUrl === "/issuesDetail";
 
     return (
         <>
@@ -55,11 +52,17 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 {currentItem && (
                     <div className="text-center mt-10">
                         <h2 className="text-2xl font-medium">
-                            {selectedMenuItem ? selectedMenuItem.label : ""}
+                            {isIssuesPage
+                                ? "문의"
+                                : selectedMenuItem?.label ?? ""}
                         </h2>
-                        <hr className=" w-[20px] mx-auto my-2 border-[#000]" />
+                        {shouldRenderHr && (
+                            <hr className=" w-[20px] mx-auto my-2 border-[#000]" />
+                        )}
                         <div className=" text-[#909090] font-light">
-                            {selectedMenuItem ? selectedMenuItem.desc : ""}
+                            {isIssuesPage
+                                ? "문의 설명"
+                                : selectedMenuItem?.desc ?? ""}
                         </div>
                     </div>
                 )}

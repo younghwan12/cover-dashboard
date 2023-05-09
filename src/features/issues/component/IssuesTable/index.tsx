@@ -81,7 +81,7 @@ const IssuesTable = () => {
                         <Button
                             type="primary"
                             size="middle"
-                            // onClick={writeIssues}
+                            onClick={() => router.push("/issuesAdd")}
                         >
                             등록
                         </Button>
