@@ -1,8 +1,8 @@
 export {
-    default as Button,
-    DownButton,
-    SaveButton,
-    RefreshButton,
+  default as Button,
+  DownButton,
+  SaveButton,
+  RefreshButton,
 } from "./Button";
 export { default as Modal, useModal } from "./Modal";
 
@@ -21,3 +21,5 @@ export * from "./Loader";
 export * from "./TextArea";
 
 export { default as RangePicker } from "./RangePicker";
+
+export * from "./Upload";

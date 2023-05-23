@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "@reduxjs/toolkit";
 import appApi from "./appApi";
+import licenseApi from "./licenseApi";
 import { rtkErrorLogger } from "./middlewares/rtkErrorLogger";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
@@ -23,6 +24,7 @@ const persistConfig = {
 
 const reducers = combineReducers({
     [appApi.reducerPath]: appApi.reducer,
+    [licenseApi.reducerPath]: licenseApi.reducer,
     code: codeMgtReducer,
     user: userMgtReducer,
     project: projectMgtReducer,
@@ -44,8 +46,9 @@ export const store = configureStore({
             },
         })
             .concat(appApi.middleware)
-            .concat(sessionExpirationMiddleware)
-            .concat(rtkErrorLogger),
+            .concat(licenseApi.middleware)
+            .concat(sessionExpirationMiddleware),
+    // .concat(rtkErrorLogger),
     devTools: false,
 });
 

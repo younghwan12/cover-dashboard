@@ -33,12 +33,12 @@ const UserInfoModal = ({ visible, setVisible }: IModalProps) => {
     useEffect(() => {
         if (visible) {
             getProfile({
-                user_id: userInfoDetail.jwt.user_id,
-                jwt: token.jwt,
-                login_id: userInfoDetail.jwt.user_id,
+                user_id: userInfoDetail?.jwt.user_id,
+                jwt: token?.jwt,
+                login_id: userInfoDetail?.jwt.user_id,
             });
         }
-    }, [getProfile, token.jwt, userInfoDetail.jwt.user_id, visible]);
+    }, [getProfile, token?.jwt, userInfoDetail?.jwt.user_id, visible]);
 
     // profileData.myInfo가 업데이트될 때마다 폼 데이터 업데이트
     useEffect(() => {

@@ -3,220 +3,295 @@
 @tailwind utilities;
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
-
+img {
+  width: auto;
+  height: auto;
+}
 html {
-    height: 100vh;
+  height: 100vh;
 }
 body {
-    /* font-family: "GmarketSans"; */
-    font-family: "NexonLv1Gothic";
-    font-weight: 500;
-    margin: 0;
-    padding: 0;
-    /* min-height: 100vh; */
+  /* font-family: "GmarketSans"; */
+  font-family: "NexonLv1Gothic";
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+  /* min-height: 100vh; */
 }
 /* :root {
 } */
 .p-breadcrumb .p-menuitem-text {
-    line-height: inherit !important;
+  line-height: inherit !important;
 }
 
 .circle {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%; /* 반지름이 width와 height의 50%가 되는 원형 요소 생성 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; /* 반지름이 width와 height의 50%가 되는 원형 요소 생성 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 /* input 아이콘 위치조정 */
 .ant-input-affix-wrapper .ant-input-clear-icon {
-    transform: translateY(-15%);
+  transform: translateY(-15%);
 }
 
 .anticon.anticon-close.ant-modal-close-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .ant-row {
-    justify-content: space-between;
+  justify-content: space-between;
 }
 /* 라벨 옆에 : 표시 */
 .ant-form-item .ant-form-item-label > label::after {
-    display: none;
+  display: none;
+}
+/* validate Message */
+.ant-form-item .ant-form-item-explain-error {
+  font-size: 13px;
 }
 
 .ant-form-item {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 .ant-descriptions-item-label.required-label::before {
-    content: "*";
-    color: #ff4d4f;
-    margin-right: 4px;
+  content: "*";
+  color: #ff4d4f;
+  margin-right: 4px;
 }
 /* 마우스불가표시 */
 .ant-input[disabled],
 .ant-input-affix-wrapper-disabled,
 .ant-input-affix-wrapper[disabled] {
-    cursor: default;
+  cursor: default;
 }
 .ant-btn-primary {
-    border: 1px solid #d9d9d9;
-    background-color: #00aaff;
-    color: #fff;
+  border: 1px solid #d9d9d9;
+  background-color: #00aaff;
+  color: #fff;
 }
 .ant-btn-primary:hover {
-    border: 1px solid #d9d9d9;
-    background-color: #0055ff;
-    color: #fff;
+  border: 1px solid #d9d9d9;
+  background-color: #0055ff;
+  color: #fff;
 }
 .ant-input-affix-wrapper .ant-input-suffix {
-    align-items: flex-end;
+  align-items: flex-end;
 }
 
 .ant-btn-dashed {
-    border: 1px solid #d9d9d9;
-    background-color: #e87c87;
-    color: #fff;
+  border: 1px solid #d9d9d9;
+  background-color: #e87c87;
+  color: #fff;
 }
 .ant-btn-dashed:hover {
-    border: 1px solid #d9d9d9 !important;
-    background-color: #e66874 !important;
-    color: #fff !important;
+  border: 1px solid #d9d9d9 !important;
+  background-color: #e66874 !important;
+  color: #fff !important;
 }
 
 .ant-btn-default {
-    margin-right: 3px;
+  margin-right: 3px;
+}
+
+.searchForm.w100 .ant-form-item-control {
+  max-width: 100%;
 }
 
 .searchForm .ant-form-item-control {
-    max-width: 450px; /* 적절한 크기로 수정해주세요 */
+  max-width: 450px; /* 적절한 크기로 수정해주세요 */
 }
 .ant-select-multiple .ant-select-selection-item-remove > .anticon {
-    vertical-align: 0;
+  vertical-align: 0;
 }
 /* modal */
 
 .ant-modal .ant-modal-header {
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #ccc;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
 }
 
 .ant-tabs-card > .ant-tabs-nav .ant-tabs-tab,
 .ant-tabs-card > div > .ant-tabs-nav .ant-tabs-tab {
-    border: 1px solid #ccc;
-    border-bottom: none;
+  border: 1px solid #ccc;
+  border-bottom: none;
 }
 
 /* primereact dataTable */
 .datatable-custom {
-    border-collapse: collapse;
-    width: 100%;
-    font-size: 14px;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+}
+.datatable-custom.flextable {
+  border-collapse: collapse;
+  width: 33%;
+  font-size: 14px;
+}
+.p-datatable.headersize .p-datatable-header {
+  background-color: #ebf2f7;
+  padding: 0.5rem;
+  border-radius: 10px 10px 0 0;
+  border: 1px solid #b4d2ec;
+}
+.p-datatable.headersize .p-datatable-thead > tr > th {
+  padding: 0.3rem !important;
+  font-size: 14px !important;
+}
+.ant-btn.ant-btn-sm {
+  color: #000;
 }
 
 .datatable-custom th,
 .datatable-custom td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: left;
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
 }
 .datatable-custom th {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 
 /* pagination */
 .p-breadcrumb {
-    background: none !important;
-    border: none !important;
+  background: none !important;
+  border: none !important;
 }
 .p-paginator .p-paginator-current,
 .p-paginator .p-paginator-pages .p-paginator-page {
-    min-width: 2.5rem !important;
-    height: 2.5rem !important;
+  min-width: 2.5rem !important;
+  height: 2.5rem !important;
 }
 .p-datatable .p-column-header-content {
-    justify-content: center;
+  justify-content: center;
 }
 .p-datatable .p-datatable-thead > tr > th {
-    border-top: 2px solid #0072bb !important;
-    border-right: 1px solid #ccc !important;
+  border-top: 2px solid #0072bb !important;
+  border-right: 1px solid #ccc !important;
 }
 .p-datatable .p-datatable-thead > tr > th:last-child {
-    border-right: none !important;
+  border-right: none !important;
 }
 /* dataTable */
 .p-datatable.Tleft .p-datatable-tbody > tr > td:first-child,
 .p-datatable.Tleft .p-datatable-tbody > tr > td:last-child {
-    text-align: left !important;
+  text-align: left !important;
 }
 .p-datatable .p-datatable-tbody > tr > td {
-    border-right: 1px solid #ccc !important;
-    padding: 0.5rem !important;
-    text-align: center !important;
-    font-size: 14px;
+  border-right: 1px solid #ccc !important;
+  padding: 0.5rem !important;
+  text-align: center !important;
+  font-size: 14px;
 }
 .p-datatable .p-datatable-tbody > tr > td:last-child {
-    border-right: none !important;
+  border-right: none !important;
 }
 .p-datatable .p-datatable-thead > tr > th {
-    padding: 0.7rem !important;
+  padding: 0.7rem !important;
 }
 
 .ant-form-item.pre .ant-form-item-label > label {
-    height: inherit !important;
-    white-space: pre-wrap !important;
-    text-align: left !important;
+  height: inherit !important;
+  white-space: pre-wrap !important;
+  text-align: left !important;
 }
 
 .ant-space-align-center {
-    align-items: baseline !important;
+  align-items: baseline !important;
 }
-
+.ant-space-align-center.prj-space {
+  align-items: center !important;
+}
 /* editor-toolbar */
 .ql-editor {
-    min-height: 200px !important;
+  min-height: 200px !important;
 }
 .ql-toolbar.ql-snow {
-    background-color: #fbf7f7;
-    border-radius: 5px 5px 0 0;
+  background-color: #fbf7f7;
+  border-radius: 5px 5px 0 0;
 }
 .ql-container.ql-snow {
-    border-radius: 0 0 5px 5px;
+  border-radius: 0 0 5px 5px;
 }
 
 .ql-toolbar.ql-snow .ql-formats {
-    border: 1px solid #ccc;
-    border-radius: 5px !important;
+  border: 1px solid #ccc;
+  border-radius: 5px !important;
 }
 
 .ql-formats button:last-child {
-    border: none;
+  border: none;
 }
 
 .ql-formats button {
-    border-right: 1px solid #ccc !important;
+  border-right: 1px solid #ccc !important;
 }
 
+/* descriptions */
+.ant-descriptions.tal.ant-descriptions-bordered .ant-descriptions-item-label {
+  text-align: left !important;
+}
+.ant-descriptions.tal.ant-descriptions-bordered .ant-descriptions-item-label,
+.ant-descriptions.tal.ant-descriptions-bordered .ant-descriptions-item-content {
+  padding: 8px 12px;
+}
+.ant-descriptions.tal .ant-descriptions-item-content {
+  padding: 8px 12px;
+}
+.ant-descriptions.tal .ant-descriptions-item-content .ant-form-item {
+  margin-bottom: 0 !important;
+}
 .ant-descriptions.desLeft.ant-descriptions-bordered
-    .ant-descriptions-item-label {
-    width: 20%;
+  .ant-descriptions-item-label {
+  width: 20%;
 }
 .ant-descriptions.ant-descriptions-bordered .ant-descriptions-item-label {
-    text-align: center !important;
+  text-align: center !important;
 }
 .ant-descriptions.issuesAdd .ant-descriptions-item-label {
-    width: 10%;
-    white-space: nowrap;
+  width: 10%;
+  white-space: nowrap;
+}
+.ant-descriptions.issuesDetail.ant-descriptions-bordered
+  .ant-descriptions-view
+  > table {
+  table-layout: fixed;
+}
+.ant-descriptions.issuesDetail.ant-descriptions-bordered
+  .ant-descriptions-item-label,
+.ant-descriptions.issuesDetail.ant-descriptions-bordered
+  .ant-descriptions-item-content {
+  padding: 14px 12px;
+}
+.ant-descriptions.issuesDetail .ant-descriptions-item-label {
+  white-space: nowrap;
 }
 .ant-descriptions-item-content {
-    padding: 10px 12px !important;
+  padding: 10px 12px !important;
+}
+.ant-descriptions.ant-descriptions-bordered .ant-descriptions-view {
+  border: none;
+  border-top: 2px solid #0072bb;
+  border-bottom: 1px solid #ccc;
+}
+.ant-descriptions .ant-descriptions-view {
+  border-radius: unset;
 }
 
 .ql-toolbar.ql-snow .ql-picker-label {
-    border-left: 1px solid #ccc !important;
+  border-left: 1px solid #ccc !important;
+}
+
+.ant-btn > span {
+  display: inline-flex;
+}
+
+.ant-input-number {
+  width: 100%;
 }

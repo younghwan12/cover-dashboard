@@ -39,10 +39,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     }
 
     // `Header` 컴포넌트의 렌더링 여부를 결정하는 변수
-    const shouldRenderHr = router.pathname !== "/";
+    const shouldRenderHr =
+        router.pathname !== "/" && router.pathname !== "/license";
 
     const isIssuesPage =
-        currentUrl === "/issuesAdd" || currentUrl === "/issuesDetail";
+        currentUrl === "/issues/add" || currentUrl === "/issues/detail" || currentUrl === "/issues/modify";
 
     return (
         <>

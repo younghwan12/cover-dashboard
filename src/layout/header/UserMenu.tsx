@@ -65,6 +65,12 @@ const UserMenu = ({ userInfo }) => {
                     로그인
                 </Link>
                 <Link
+                    href="/selogin"
+                    className="border-[1px] rounded px-[14px] py-[6px] mr-2 bg-gray-100 text-sm hover:bg-gray-200"
+                >
+                    로그인(세션제작중..)
+                </Link>
+                <Link
                     href="/register"
                     className="border-[1px] rounded px-[14px] py-[6px] bg-slate-50 text-sm hover:bg-gray-200"
                 >

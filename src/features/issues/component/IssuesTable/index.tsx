@@ -62,9 +62,12 @@ const IssuesTable = () => {
         });
     };
 
-    // const writeIssues = () => {
-    //     setVisible(true);
-    // };
+    const issuesDetail = (e) => {
+        router.push({
+            pathname: "/issues/detail",
+            query: { issue_id: e.data.issue_id },
+        });
+    };
 
     return (
         <>
@@ -81,7 +84,7 @@ const IssuesTable = () => {
                         <Button
                             type="primary"
                             size="middle"
-                            onClick={() => router.push("/issuesAdd")}
+                            onClick={() => router.push("/issues/add")}
                         >
                             등록
                         </Button>
@@ -89,7 +92,7 @@ const IssuesTable = () => {
                     </div>
                 </div>
                 <DataTable
-                    className="datatable-custom"
+                    className="datatable-custom cursor-pointer"
                     stripedRows
                     lazy
                     rowHover
@@ -97,6 +100,7 @@ const IssuesTable = () => {
                     loading={isFetching}
                     rows={rows}
                     scrollable
+                    onRowClick={issuesDetail}
                 >
                     <Column field="no" header="No." />
                     <Column field="project_name" header="프로젝트명" />
@@ -117,8 +121,6 @@ const IssuesTable = () => {
                     onPageChange={onPageChange}
                 />
             </div>
-
-            {/* <IssuesWriteModal visible={visible} setVisible={setVisible} /> */}
         </>
     );
 };
