@@ -1,28 +1,22 @@
 import qs from "query-string";
 import appApi from "@/redux/appApi";
-import {
-    CodeMgtReq,
-    CodeMgtResList,
-    AddCodeMgtReq,
-    DelCodeMgtReq,
-    DelCode,
-} from "../types";
+import { CodeMgtReq, CodeMgtResList, AddCodeMgtReq, DelCodeMgtReq, DelCode } from "../types";
 
 const appTaggedApi = appApi.enhanceEndpoints({
     addTagTypes: ["CodeMgt"],
 });
 
 const codeMgtApi = appTaggedApi.injectEndpoints({
-    endpoints: (builder) => ({
+    endpoints: builder => ({
         getCodeList: builder.query<CodeMgtResList, CodeMgtReq>({
-            query: (args) => ({
+            query: args => ({
                 url: `/code/list?${qs.stringify(args)}`,
                 method: "GET",
             }),
             providesTags: () => [{ type: "CodeMgt" }],
         }),
         addCodeList: builder.mutation<CodeMgtResList, AddCodeMgtReq>({
-            query: (formData) => {
+            query: formData => {
                 const encodedFormData = `${qs.stringify(formData)}`;
                 return {
                     url: `/code/insert`,
@@ -36,7 +30,7 @@ const codeMgtApi = appTaggedApi.injectEndpoints({
             invalidatesTags: () => [{ type: "CodeMgt" }],
         }),
         upDateCodeList: builder.mutation<CodeMgtResList, AddCodeMgtReq>({
-            query: (formData) => {
+            query: formData => {
                 const encodedFormData = `${qs.stringify(formData)}`;
                 return {
                     url: `/code/update`,
@@ -50,7 +44,7 @@ const codeMgtApi = appTaggedApi.injectEndpoints({
             invalidatesTags: () => [{ type: "CodeMgt" }],
         }),
         delCode: builder.mutation<CodeMgtResList, DelCode>({
-            query: (formData) => {
+            query: formData => {
                 const encodedFormData = `${qs.stringify(formData)}`;
                 return {
                     url: `/code/delete`,
@@ -65,7 +59,7 @@ const codeMgtApi = appTaggedApi.injectEndpoints({
         }),
         // 다중삭제
         delCodeList: builder.mutation<CodeMgtResList, DelCodeMgtReq>({
-            query: (formData) => {
+            query: formData => {
                 const encodedFormData = `${qs.stringify(formData)}`;
                 return {
                     url: `/code/rowDelete`,

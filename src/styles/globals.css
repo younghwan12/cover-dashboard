@@ -170,6 +170,7 @@ body {
 }
 .p-datatable .p-column-header-content {
   justify-content: center;
+  white-space: nowrap;
 }
 .p-datatable .p-datatable-thead > tr > th {
   border-top: 2px solid #0072bb !important;
@@ -294,4 +295,51 @@ body {
 
 .ant-input-number {
   width: 100%;
+}
+
+li.list-disc.text-left::marker {
+  margin-right: 1px;
+}
+
+i.fa.fa-quora {
+  color: #949494;
+}
+.fa {
+  display: flex;
+  align-items: center;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fa-quora:before {
+  content: "\f2c4";
+}
+
+.ql-editor p,
+.ql-editor ol,
+.ql-editor ul,
+.ql-editor pre,
+.ql-editor blockquote,
+.ql-editor h1,
+.ql-editor h2,
+.ql-editor h3,
+.ql-editor h4,
+.ql-editor h5,
+.ql-editor h6 {
+  font-size: 14px;
+}
+
+.ant-upload-wrapper.pb5 .ant-upload-select {
+  padding-bottom: 5px;
+}
+
+.ql-toolbar.ql-snow + .ql-container.ql-snow {
+  height: 200px;
+}
+
+.ant-upload-wrapper {
+  display: flex;
 }

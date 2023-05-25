@@ -6,10 +6,7 @@ import { useEffect, useState } from "react";
 import { useModal } from "@/common";
 import { useRouter } from "next/router";
 import IssuesAddQuill from "../IssuesAddQuill";
-import {
-  useUpDateFileListMutation,
-  useUpDateIssuesMgtListMutation,
-} from "@/features/issues/redux";
+import { useUpDateFileListMutation, useUpDateIssuesMgtListMutation } from "@/features/issues/redux";
 import { UpdateIssuesListReq } from "@/features/issues/types";
 import { useAppSelector } from "@/redux/hooks";
 import { UploadOutlined } from "@ant-design/icons";
@@ -73,15 +70,11 @@ const IssuesAddContainer = () => {
                   fileData.append("login_id", userInfoDetail.jwt.user_id);
 
                   axios
-                    .post(
-                      "http://coverdreamit.co.kr:8001/file/upload",
-                      fileData,
-                      {
-                        headers: {
-                          "Content-Type": "multipart/form-data",
-                        },
-                      }
-                    )
+                    .post("http://coverdreamit.co.kr:8001/file/upload", fileData, {
+                      headers: {
+                        "Content-Type": "multipart/form-data",
+                      },
+                    })
                     .then((response) => {
                       modal.success({
                         title: "저장되었습니다.",
@@ -155,11 +148,7 @@ const IssuesAddContainer = () => {
             <Descriptions.Item label="솔루션" span={3}>
               J2EE Framework, C Framework
             </Descriptions.Item>
-            <Descriptions.Item
-              label="요청사항"
-              className="required-label"
-              span={3}
-            >
+            <Descriptions.Item label="요청사항" className="required-label" span={3}>
               <Space>
                 <FormItem name="issue_request_type" className="!mb-0">
                   <Select className="min-w-[150px]">

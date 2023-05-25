@@ -197,6 +197,13 @@ const IssuesModifyContainer = () => {
                         // 파일 업로드 실패 시 처리
                         console.log(error);
                       });
+                  } else {
+                    modal.success({
+                      title: "저장되었습니다.",
+                      onOk() {
+                        router.push(`/issues/detail?issue_id=${issue_id}`);
+                      },
+                    });
                   }
                 });
             },
@@ -316,31 +323,33 @@ const IssuesModifyContainer = () => {
                 <IssuesModifyQuill detail={detail} setDetail={setDetail} />
               </Descriptions.Item>
               <Descriptions.Item label="첨부파일" span={4}>
-                {issuesDetail?.fileInfo.map((file, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center text-[#888] text-[12px]"
-                  >
-                    <div>
-                      <span
-                        onClick={() =>
-                          handleFileDownload(file.file_uid, file.file_name)
-                        }
-                        className="mr-1 text-[#007bff] cursor-pointer"
-                      >
-                        {file.file_name}
-                      </span>
-                      {formatFileSize(parseInt(file.file_size))}
+                {issuesDetail?.fileInfo
+                  .filter((file) => file.sub_ui_id === "1")
+                  .map((file, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center text-[#888] text-[12px]"
+                    >
+                      <div>
+                        <span
+                          onClick={() =>
+                            handleFileDownload(file.file_uid, file.file_name)
+                          }
+                          className="mr-1 text-[#007bff] cursor-pointer"
+                        >
+                          {file.file_name}
+                        </span>
+                        {formatFileSize(parseInt(file.file_size))}
+                      </div>
+                      <BsTrash
+                        className="mx-1 cursor-pointer"
+                        onClick={() => handleFileDelete(file)}
+                      />
+                      <div>
+                        {file.crtr_name}, {file.crtr_dt}
+                      </div>
                     </div>
-                    <BsTrash
-                      className="mx-1 cursor-pointer"
-                      onClick={() => handleFileDelete(file)}
-                    />
-                    <div>
-                      {file.crtr_name}, {file.crtr_dt}
-                    </div>
-                  </div>
-                ))}
+                  ))}
                 <FormItem name="file">
                   <Upload {...props}>
                     <Button icon={<UploadOutlined />}>파일을 선택하세요</Button>

@@ -79,7 +79,6 @@ const DashboardSearch = () => {
         page_endnum: 15,
       });
     }
-    console.log(issuesList, "issueList");
   }, [token?.jwt, searchParams]);
 
   const getExcel = (excelData: any) => {

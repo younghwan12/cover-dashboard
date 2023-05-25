@@ -3,11 +3,12 @@ import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 
 interface ISettingQuillProps {
+  index: number;
   detail: string;
-  setDetail: React.Dispatch<React.SetStateAction<string>>;
+  setDetail: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const IssuesDetailQuill = ({ detail, setDetail }: ISettingQuillProps) => {
+const IssuesQaQuill = ({ detail, setDetail, index }: ISettingQuillProps) => {
   const QuillWrapper = useMemo(
     () =>
       dynamic(() => import("react-quill"), {
@@ -62,7 +63,11 @@ const IssuesDetailQuill = ({ detail, setDetail }: ISettingQuillProps) => {
 
   const handleDetailChange = (value, _, source) => {
     if (source === "user") {
-      setDetail(value);
+      setDetail((prevDetail) => {
+        const updatedDetail = [...prevDetail];
+        updatedDetail[index] = value;
+        return updatedDetail;
+      });
     }
     if (source === "user" && value.indexOf("[code]") !== -1) {
       const div = document.createElement("div");
@@ -73,7 +78,7 @@ const IssuesDetailQuill = ({ detail, setDetail }: ISettingQuillProps) => {
 
   return (
     <QuillWrapper
-      className="bg-white"
+      className="bg-[white]"
       modules={modules}
       formats={formats}
       theme="snow"
@@ -83,4 +88,4 @@ const IssuesDetailQuill = ({ detail, setDetail }: ISettingQuillProps) => {
   );
 };
 
-export default IssuesDetailQuill;
+export default IssuesQaQuill;

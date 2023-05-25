@@ -8,10 +8,13 @@ import {
   IssuesDetailResList,
   UpdateFilesRes,
   UpdateFilesReq,
+  IssueHistoryRes,
+  AddIssuesQARes,
+  AddIssuesQAReq,
 } from "../types";
 
 const appTaggedApi = appApi.enhanceEndpoints({
-  addTagTypes: ["IssuesMgt", "IssuesDetail"],
+  addTagTypes: ["IssuesMgt", "IssuesDetail", "IssuesHistory"],
 });
 
 const issuesMgtApi = appTaggedApi.injectEndpoints({
@@ -25,7 +28,6 @@ const issuesMgtApi = appTaggedApi.injectEndpoints({
     }),
     upDateFileList: builder.mutation<UpdateFilesRes, UpdateFilesReq>({
       query: (formData) => {
-        console.log("바운더리 확인용", formData);
         return {
           url: `/file/upload`,
           method: "POST",
@@ -51,10 +53,7 @@ const issuesMgtApi = appTaggedApi.injectEndpoints({
       },
       invalidatesTags: () => [{ type: "IssuesDetail" }],
     }),
-    upDateIssuesMgtList: builder.mutation<
-      UpdateIssuesListRes,
-      UpdateIssuesListReq
-    >({
+    upDateIssuesMgtList: builder.mutation<UpdateIssuesListRes, UpdateIssuesListReq>({
       query: (formData) => {
         const encodedFormData = `${qs.stringify(formData)}`;
         return {
@@ -68,10 +67,7 @@ const issuesMgtApi = appTaggedApi.injectEndpoints({
       },
       invalidatesTags: () => [{ type: "IssuesMgt" }],
     }),
-    modifyIssuesMgtList: builder.mutation<
-      UpdateIssuesListRes,
-      UpdateIssuesListReq
-    >({
+    modifyIssuesMgtList: builder.mutation<UpdateIssuesListRes, UpdateIssuesListReq>({
       query: (formData) => {
         const encodedFormData = `${qs.stringify(formData)}`;
         return {
@@ -92,6 +88,41 @@ const issuesMgtApi = appTaggedApi.injectEndpoints({
       }),
       providesTags: () => [{ type: "IssuesDetail" }],
     }),
+    addIssuesQA: builder.mutation<AddIssuesQARes, AddIssuesQAReq>({
+      query: (formData) => {
+        const encodedFormData = `${qs.stringify(formData)}`;
+        return {
+          url: `/issues/insertIssueQA`,
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: encodedFormData,
+        };
+      },
+      invalidatesTags: () => [{ type: "IssuesDetail" }],
+    }),
+    upDateIssuesQA: builder.mutation<AddIssuesQARes, AddIssuesQAReq>({
+      query: (formData) => {
+        const encodedFormData = `${qs.stringify(formData)}`;
+        return {
+          url: `/issues/updateIssueQA`,
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: encodedFormData,
+        };
+      },
+      invalidatesTags: () => [{ type: "IssuesDetail" }],
+    }),
+    getIssuesHistory: builder.query<IssueHistoryRes, IssuesListReq>({
+      query: (args) => ({
+        url: `/issues/getIssueInfoHistory?${qs.stringify(args)}`,
+        method: "GET",
+      }),
+      providesTags: () => [{ type: "IssuesHistory" }],
+    }),
   }),
   overrideExisting: true,
 });
@@ -104,4 +135,7 @@ export const {
   useLazyGetIssuesDetailQuery,
   useModifyIssuesMgtListMutation,
   useDelFileListMutation,
+  useLazyGetIssuesHistoryQuery,
+  useAddIssuesQAMutation,
+  useUpDateIssuesQAMutation,
 } = issuesMgtApi;
