@@ -15,25 +15,25 @@ import { ConfigProvider } from "antd";
 import koKR from "antd/locale/ko_KR";
 
 const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
-    const router = useRouter();
+  const router = useRouter();
 
-    return (
-        <>
-            <Head>
-                <title>PMS helpdesk</title>
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-            <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
-                    {/* <SessionProvider session={session}> */}
-                    <ConfigProvider locale={koKR}>
-                        <Component {...pageProps} />
-                    </ConfigProvider>
-                    {/* </SessionProvider> */}
-                </PersistGate>
-            </Provider>
-        </>
-    );
+  return (
+    <>
+      <Head>
+        <title>PMS helpdesk</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          {/* <SessionProvider session={session}> */}
+          <ConfigProvider locale={koKR}>
+            <Component {...pageProps} />
+          </ConfigProvider>
+          {/* </SessionProvider> */}
+        </PersistGate>
+      </Provider>
+    </>
+  );
 };
 
 export default App;

@@ -1,26 +1,7 @@
-import { DatePicker } from "antd";
-import React from "react";
+import { DatePicker as AntdDatePicker } from "antd";
+import { FC } from "react";
+import { RangePickerProps } from "antd/es/date-picker";
 
-interface CustomRangePickerProps {
-    title?: string;
-    disabled?: boolean;
-}
-
-const RangePicker = React.forwardRef<any, CustomRangePickerProps>(
-    ({ title, ...rest }, ref) => {
-        return (
-            <div>
-                {title && <div>{title}</div>}
-                <DatePicker.RangePicker
-                    {...rest}
-                    ref={ref}
-                    format="YYYY-MM-DD"
-                />
-            </div>
-        );
-    }
-);
-
-RangePicker.displayName = "RangePicker";
-
-export default RangePicker;
+export const RangePicker: FC<RangePickerProps> = (props) => {
+  return <AntdDatePicker.RangePicker {...props} />;
+};

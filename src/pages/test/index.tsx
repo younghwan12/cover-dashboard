@@ -1,13 +1,13 @@
 import { Button, Form, FormItem, Input, RangePicker, Space, useForm, useModal } from "@/common";
 import { Option, Select } from "@/common/Select";
 import { SearchForm, SearchFormBox } from "@/components/search";
-import ProjectInfoModal from "@/features/modal/ProjectInfoModal";
 import { useAppDispatch } from "@/redux/hooks";
 import { Checkbox } from "antd";
 import dayjs from "dayjs";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import { setSearchParams } from "../../redux/projectSlice";
-const ProjectMgtSearch = () => {
+
+const ProjectMgtPage = () => {
   const [visible, setVisible] = useState(false);
   const [modal, contextHolder] = useModal();
 
@@ -15,23 +15,7 @@ const ProjectMgtSearch = () => {
   const dispatch = useAppDispatch();
   const [rangePickerDisabled, setRangePickerDisabled] = useState(true);
 
-  const handleFinish = (v) => {
-    const { srch_auth, ...params } = v;
-    if (!rangePickerDisabled && v.srch_auth === undefined) {
-      modal.error({
-        title: "전체기간이 아닙니다. 등록기간을 입력해 주세요.",
-      });
-    } else {
-      dispatch(
-        setSearchParams({
-          ...params,
-          srch_all_dt: rangePickerDisabled ? "Y" : "N",
-          srch_start_dt: v.srch_auth ? dayjs(v.srch_auth[0]).format("YYYY-MM-DD") : "",
-          srch_end_dt: v.srch_auth ? dayjs(v.srch_auth[1]).format("YYYY-MM-DD") : "",
-        })
-      );
-    }
-  };
+  const handleFinish = (v) => {};
 
   const allDatePicker = (e) => {
     if (e.target.checked) {
@@ -46,6 +30,7 @@ const ProjectMgtSearch = () => {
       srch_project_no: e.project_no,
     });
   };
+
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -61,10 +46,11 @@ const ProjectMgtSearch = () => {
     };
   }, []);
 
+  const DynamicLayout = dynamic(() => import("@/layout/main/Layout"));
   return (
-    <>
-      <div className="mt-5 rounded-xl max-w-[85%] mx-auto border border-[#cdcdcd]">
-        <div className="px-7 py-3 border-b-[1px] pb-2 bg-slate-100 rounded-t-xl">검색</div>
+    <DynamicLayout>
+      <div className="  mt-5 rounded-xl mx-auto border border-[#cdcdcd]">
+        <div className="px-7 py-3 borer-b-[1px] pb-2 bg-slate-100 rounded-t-xl">검색</div>
         <div className="px-7 py-4">
           <Form form={form} onFinish={handleFinish}>
             <SearchFormBox>
@@ -202,9 +188,7 @@ const ProjectMgtSearch = () => {
         </div>
         {contextHolder}
       </div>
-      <ProjectInfoModal visible={visible} setVisible={setVisible} onOk={handleInfoSelect} />
-    </>
+    </DynamicLayout>
   );
 };
-
-export default ProjectMgtSearch;
+export default ProjectMgtPage;

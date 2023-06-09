@@ -38,7 +38,37 @@ body {
 .ant-input-affix-wrapper .ant-input-clear-icon {
   transform: translateY(-15%);
 }
-
+/* register Modal */
+.ant-modal.register .ant-modal-title {
+  font-size: 18px;
+  padding-left: 15px;
+}
+.ant-modal.register .ant-modal-header {
+  margin-bottom: 0;
+}
+.ant-modal.register .ant-modal-content {
+  padding: 20px 0;
+}
+.ant-modal.register .ant-modal-close {
+  width: 30px;
+  height: 30px;
+}
+.ant-modal.register .ant-modal-close-x {
+  font-size: 20px;
+}
+.ant-modal.register .ant-modal-body {
+  height: 70vh;
+  padding: 15px;
+  overflow: auto;
+}
+.ant-modal.register .ant-modal-footer {
+  padding-right: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #d9d9d9;
+}
+.ant-modal.register .ant-modal-body p {
+  margin-bottom: 1rem;
+}
 .anticon.anticon-close.ant-modal-close-icon {
   display: flex;
   justify-content: center;
@@ -248,8 +278,7 @@ body {
 .ant-descriptions.tal .ant-descriptions-item-content .ant-form-item {
   margin-bottom: 0 !important;
 }
-.ant-descriptions.desLeft.ant-descriptions-bordered
-  .ant-descriptions-item-label {
+.ant-descriptions.desLeft.ant-descriptions-bordered .ant-descriptions-item-label {
   width: 20%;
 }
 .ant-descriptions.ant-descriptions-bordered .ant-descriptions-item-label {
@@ -259,15 +288,11 @@ body {
   width: 10%;
   white-space: nowrap;
 }
-.ant-descriptions.issuesDetail.ant-descriptions-bordered
-  .ant-descriptions-view
-  > table {
+.ant-descriptions.issuesDetail.ant-descriptions-bordered .ant-descriptions-view > table {
   table-layout: fixed;
 }
-.ant-descriptions.issuesDetail.ant-descriptions-bordered
-  .ant-descriptions-item-label,
-.ant-descriptions.issuesDetail.ant-descriptions-bordered
-  .ant-descriptions-item-content {
+.ant-descriptions.issuesDetail.ant-descriptions-bordered .ant-descriptions-item-label,
+.ant-descriptions.issuesDetail.ant-descriptions-bordered .ant-descriptions-item-content {
   padding: 14px 12px;
 }
 .ant-descriptions.issuesDetail .ant-descriptions-item-label {
@@ -275,6 +300,10 @@ body {
 }
 .ant-descriptions-item-content {
   padding: 10px 12px !important;
+}
+.ant-descriptions.ant-descriptions-bordered.register .ant-descriptions-view {
+  border: 1px solid rgba(5, 5, 5, 0.06);
+  border-radius: 5px;
 }
 .ant-descriptions.ant-descriptions-bordered .ant-descriptions-view {
   border: none;
@@ -342,4 +371,60 @@ i.fa.fa-quora {
 
 .ant-upload-wrapper {
   display: flex;
+}
+
+/* searchForm-box */
+.searchForm-box {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.ant-form-item-label {
+  margin-right: 10px;
+  padding: 0 5px;
+}
+
+@media (max-width: 575px) {
+  .ant-form .ant-form-item .ant-form-item-label {
+    display: none;
+  }
+}
+
+/* Menu */
+.ant-menu-light {
+  background-color: inherit;
+  max-width: 50px !important;
+}
+.ant-menu-light .ant-menu-submenu-selected > .ant-menu-submenu-title .anticon svg {
+  transform: scale(1.5) rotate(90deg);
+  color: #000;
+}
+
+.ant-menu-light.ant-menu-horizontal > .ant-menu-submenu-selected::after {
+  border-bottom-color: #000;
+}
+
+.ant-menu-horizontal .ant-menu-submenu {
+  padding-inline: 4px !important;
+}
+.ant-menu-submenu-popup .ant-menu-vertical.ant-menu-sub:not([class*="-active"]) {
+  position: absolute;
+  right: 0;
+}
+
+.ant-menu-submenu.ant-menu-submenu-popup.ant-menu.ant-menu-light.ant-menu-submenu-placement-rightTop
+  .ant-menu.ant-menu-sub.ant-menu-vertical {
+  position: absolute;
+  right: 195px;
+}
+.ant-menu-submenu-popup .ant-menu-vertical .ant-menu-item {
+  padding-inline: 10px;
+}
+.ant-menu-title-content {
+  margin-left: 10px;
+}
+.ant-menu-submenu > .ant-menu .ant-menu-submenu-arrow {
+  left: 5px;
+  transform: scaleX(-1);
 }

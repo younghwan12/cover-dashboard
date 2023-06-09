@@ -1,8 +1,17 @@
-import { Select as AntdSelect, SelectProps } from 'antd'
+import { Select as AntdSelect, SelectProps } from "antd";
 
-export const Select = (props: SelectProps) => {
-    return <AntdSelect {...props} placeholder="선택" />;
+interface CustomSelectProps extends SelectProps {
+  placeholder?: string | boolean | number;
 }
 
+export const Select = (props: CustomSelectProps) => {
+  return (
+    <AntdSelect
+      className="min-w-[200px] max-w-[200px]"
+      {...props}
+      placeholder={props.placeholder ? props.placeholder : "선택"}
+    />
+  );
+};
 
-export const Option = AntdSelect.Option
+export const Option = AntdSelect.Option;

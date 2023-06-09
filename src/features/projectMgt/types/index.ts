@@ -2,6 +2,8 @@ import { LogEx, Paging } from "@/common/types";
 
 export interface ProjectListReq extends Paging, LogEx {
   srch_project_no?: string;
+  project_name?: string;
+  except_prj?: string;
 }
 export interface ProjectListResList {
   list: ProjectList[];

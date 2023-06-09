@@ -1,7 +1,7 @@
 import { Input as AntdInput, InputProps } from "antd";
 
 const Input = (props: InputProps) => {
-    return <AntdInput allowClear {...props} />;
+  return <AntdInput allowClear {...props} />;
 };
 export default Input;
 
@@ -14,7 +14,7 @@ export default Input;
 type AntdInputPasswordType = typeof AntdInput.Password.defaultProps;
 
 export const Password = (props: AntdInputPasswordType) => {
-    return <AntdInput.Password placeholder="비밀번호" {...props} />;
+  return <AntdInput.Password placeholder="비밀번호" {...props} />;
 };
 
 export { default as AppCodeInput } from "./AppCodeInput";

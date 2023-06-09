@@ -209,7 +209,7 @@ const IssuesDetailContainer = () => {
       project_no: issuesDetail?.qaInfo[index + 1]?.project_no,
       issue_id: issuesDetail?.qaInfo[index + 1]?.issue_id,
       qa_id: issuesDetail?.qaInfo[index + 1]?.qa_id,
-      detail: issuesDetail?.qaInfo[index + 1]?.detail,
+      detail: detail[index + 1],
       jwt: token.jwt,
       login_id: userInfoDetail.jwt.user_id,
     };
@@ -390,7 +390,7 @@ const IssuesDetailContainer = () => {
                         setIsHidden(updatedHidden);
                       }}
                     />
-                    <IssuesQaQuill detail={detail[index]} index={index} setDetail={setDetail} />
+                    <IssuesQaQuill detail={detail[index + 1]} index={index + 1} setDetail={setDetail} />
                   </div>
 
                   <span className="text-sm">첨부파일</span>

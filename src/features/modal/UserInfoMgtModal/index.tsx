@@ -9,6 +9,7 @@ import { Button, Tabs } from "antd";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import {
+  useDelUserMutation,
   useLazyGetUserMgtDetailQuery,
   useUpDateUserMgtListMutation,
 } from "@/features/userMgt/redux";
@@ -48,8 +49,9 @@ const UserInfoMgtModal = ({ visible, setVisible, rowData }: IModalProps) => {
 
   const [upDateUser] = useUpDateUserMgtListMutation();
 
-  const [getDetail, { data: profile, isFetching: profileIsFetching }] =
-    useLazyGetUserMgtDetailQuery();
+  const [getDetail, { data: profile, isFetching: profileIsFetching }] = useLazyGetUserMgtDetailQuery();
+
+  const [delUser] = useDelUserMutation();
 
   // 팝업 열리면 데이터 호출
   useEffect(() => {
@@ -64,7 +66,6 @@ const UserInfoMgtModal = ({ visible, setVisible, rowData }: IModalProps) => {
 
   // profileData.myInfo가 업데이트될 때마다 폼 데이터 업데이트
   useEffect(() => {
-    console.log(profile?.userInfo[0]?.nexcore_solution);
     if (profile?.userInfo) {
       form.setFieldsValue({
         user_id: profile.userInfo[0]?.user_id,
@@ -74,12 +75,8 @@ const UserInfoMgtModal = ({ visible, setVisible, rowData }: IModalProps) => {
         company: profile.userInfo[0]?.company,
         project_name: profile.userInfo[0]?.project_name,
         // 수정요망...
-        nexcore_solution: profile.userInfo[0]?.nexcore_solution
-          ? profile.userInfo[0]?.nexcore_solution.split(",")
-          : [],
-        auth: profile.userInfo[0]?.auth
-          ? profile.userInfo[0]?.auth.split(",")
-          : [],
+        nexcore_solution: profile.userInfo[0]?.nexcore_solution ? profile.userInfo[0]?.nexcore_solution.split(",") : [],
+        auth: profile.userInfo[0]?.auth ? profile.userInfo[0]?.auth.split(",") : [],
         active_status: profile.userInfo[0]?.active_status,
         mail_active_status: profile.userInfo[0]?.mail_active_status,
         remarks: profile.userInfo[0]?.remarks,
@@ -120,9 +117,7 @@ const UserInfoMgtModal = ({ visible, setVisible, rowData }: IModalProps) => {
           login_id: userInfoDetail.jwt.user_id,
           auth: v.auth ? v.auth.join(",") : "",
           pwd: v.password ? v.password : "",
-          nexcore_solution: v.nexcore_solution
-            ? v.nexcore_solution.join(",")
-            : "",
+          nexcore_solution: v.nexcore_solution ? v.nexcore_solution.join(",") : "",
           projects: JSON.stringify(result),
         })
           .unwrap()
@@ -143,9 +138,30 @@ const UserInfoMgtModal = ({ visible, setVisible, rowData }: IModalProps) => {
   };
 
   const modalOnOkFun = (r, e) => {
-    // resetModal();
     form.submit();
-    // setVisible(false);
+  };
+
+  const modalOnDeleteFun = () => {
+    const formData = {
+      user_id: rowData.user_id,
+      jwt: token.jwt,
+      login_id: userInfoDetail.jwt.user_id,
+    };
+    modal.confirm({
+      title: "삭제하시겠습니까?",
+      onOk() {
+        delUser(formData)
+          .unwrap()
+          .then((data) => {
+            modal.success({
+              title: "삭제되었습니다.",
+              onOk() {
+                setVisible(false);
+              },
+            });
+          });
+      },
+    });
   };
 
   return (
@@ -157,12 +173,11 @@ const UserInfoMgtModal = ({ visible, setVisible, rowData }: IModalProps) => {
         onCancel={() => modalOnCancelFun()}
         onOk={(e) => modalOnOkFun(selectedDatas, e)}
         footer={[
-          <Button
-            key="save"
-            type="primary"
-            onClick={(e) => modalOnOkFun(selectedDatas, e)}
-          >
+          <Button key="save" type="primary" onClick={(e) => modalOnOkFun(selectedDatas, e)}>
             저장
+          </Button>,
+          <Button key="delete" type="dashed" onClick={() => modalOnDeleteFun()}>
+            삭제
           </Button>,
           <Button key="close" onClick={() => modalOnCancelFun()}>
             닫기
@@ -188,28 +203,16 @@ const UserInfoMgtModal = ({ visible, setVisible, rowData }: IModalProps) => {
                     <FormItem label="메일" name="email" required={true}>
                       <Input />
                     </FormItem>
-                    <FormItem
-                      label="연락처"
-                      name="phone_number"
-                      required={true}
-                    >
+                    <FormItem label="연락처" name="phone_number" required={true}>
                       <Input />
                     </FormItem>
                     <FormItem label="회사" name="company" required={true}>
                       <Input />
                     </FormItem>
-                    <FormItem
-                      label="프로젝트"
-                      name="project_name"
-                      required={true}
-                    >
+                    <FormItem label="프로젝트" name="project_name" required={true}>
                       <Input />
                     </FormItem>
-                    <FormItem
-                      label="PMS PLUS 사용 제품"
-                      name="nexcore_solution"
-                      required={true}
-                    >
+                    <FormItem label="PMS PLUS 사용 제품" name="nexcore_solution" required={true}>
                       <Select mode="multiple">
                         <Option value="framework_j2ee">J2EE Framework</Option>
                         <Option value="framework_c">C Framework</Option>
@@ -239,9 +242,7 @@ const UserInfoMgtModal = ({ visible, setVisible, rowData }: IModalProps) => {
                         <Option value="wait_transfer">대기(데이터 이관)</Option>
                         <Option value="active">활성</Option>
                         <Option value="inactive">비활성</Option>
-                        <Option value="inactive_pw">
-                          비활성(비밀번호 입력오류)
-                        </Option>
+                        <Option value="inactive_pw">비활성(비밀번호 입력오류)</Option>
                       </Select>
                     </FormItem>
                     <FormItem label="메일 알림" name="mail_active_status">
@@ -272,16 +273,8 @@ const UserInfoMgtModal = ({ visible, setVisible, rowData }: IModalProps) => {
               key: "2",
               children: (
                 <DataTable value={products} className="datatable-custom">
-                  <Column
-                    field="project_name"
-                    header="프로젝트명"
-                    style={{ width: "35%" }}
-                  ></Column>
-                  <Column
-                    field="nexcore_solution_name"
-                    header="PMS PLUS 솔루션"
-                    style={{ width: "35%" }}
-                  ></Column>
+                  <Column field="project_name" header="프로젝트명" style={{ width: "35%" }}></Column>
+                  <Column field="nexcore_solution_name" header="PMS PLUS 솔루션" style={{ width: "35%" }}></Column>
                   <Column field="auth_name" header="프로젝트 권한"></Column>
                 </DataTable>
               ),
