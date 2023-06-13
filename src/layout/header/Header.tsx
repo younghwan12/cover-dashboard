@@ -1,6 +1,6 @@
 import { getUserInfoDetail } from "@/features/login/redux/loginAction";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Container from "../Container";
 import { UserMenu, Pagination, Navbar, Logo } from "@/layout/header";
 import { Menu } from "antd";
@@ -15,19 +15,19 @@ const Header = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isPhone, setIsPhone] = useState(false);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1060);
-      setIsPhone(window.innerWidth <= 720);
-    };
+  const handleResize = useCallback(() => {
+    setIsMobile(window.innerWidth <= 1060);
+    setIsPhone(window.innerWidth <= 720);
+  }, []);
 
+  useEffect(() => {
     window.addEventListener("resize", handleResize);
     handleResize();
 
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [handleResize]);
 
   useEffect(() => {
     if (token?.jwt) {
@@ -46,7 +46,7 @@ const Header = () => {
       <header className="fixed left-0 top-0 min-w-full !z-50">
         {isMobile ? (
           isPhone ? (
-            <div className="py-4 border-t-[4px] border-[#0072bb] bg-blue-50">
+            <div className="py-4 border-t-[4px] border-[#0072bb] bg-white">
               <Container>
                 <div
                   className="
@@ -57,10 +57,11 @@ const Header = () => {
                   <Logo />
                   <Navbar menu={userInfoDetail?.menu} userInfo={userInfoDetail} />
                 </div>
+                {!userInfoDetail && <UserMenu userInfo={userInfoDetail} />}
               </Container>
             </div>
           ) : (
-            <div className="py-4 border-t-[4px] border-[#0072bb] bg-blue-50 min-w-[715px]">
+            <div className="py-4 border-t-[4px] border-[#0072bb] bg-white  min-w-[715px]">
               <Container>
                 <div
                   className="

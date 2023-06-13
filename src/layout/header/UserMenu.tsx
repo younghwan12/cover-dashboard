@@ -57,9 +57,11 @@ const UserMenu = ({ userInfo }) => {
           {isMobile ? (
             <div className="relative">
               <div className="flex">
-                <div className="mr-2 flex items-center content-center cursor-auto">{userInfo?.user_name} 님</div>
-                <button className="bg-slate-50 rounded-[50%] p-2 hover:bg-gray-200" onClick={handleMenuToggle}>
-                  <AiOutlineUser size="25" />
+                <div className="mr-2 flex items-center content-center cursor-auto text-blue-600">
+                  <span className="text-black">{userInfo?.user_name}</span> 님
+                </div>
+                <button className="bg-blue-300 rounded-[50%] p-2 hover:bg-blue-400" onClick={handleMenuToggle}>
+                  <AiOutlineUser size="25" className="text-white" />
                 </button>
               </div>
               {isMenuOpen && (

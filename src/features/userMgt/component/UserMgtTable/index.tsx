@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { useModal } from "@/common";
 import { UserInfoMgtModal } from "@/features/modal";
@@ -28,6 +28,21 @@ const UserMgtTable = () => {
   const [getUserList, { data: userList, isFetching }] = useLazyGetUserMgtListQuery();
 
   const [delUser] = useDelUserMgtListMutation();
+
+  const [isPhone, setIsPhone] = useState(false);
+
+  const handleResize = useCallback(() => {
+    setIsPhone(window.innerWidth <= 720);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [handleResize]);
 
   // 팝업 열리면 데이터 호출
   useEffect(() => {
@@ -130,15 +145,15 @@ const UserMgtTable = () => {
           onSelectionChange={(e: DataTableSelectionChangeEvent<UserList[]>) => setSelectedDatas(e.value)}
           rows={rows}
         >
-          <Column selectionMode="multiple" headerStyle={{ width: "3rem" }}></Column>
-          <Column field="no" header="No." />
+          <Column selectionMode="multiple" className="!text-center" headerStyle={{ width: "3rem" }}></Column>
+          <Column field="no" header="No." className="!text-center" />
           <Column field="user_id" header="사용자 ID" body={userIdBody} />
           <Column field="company" header="회사" />
           <Column field="auth_name" header="권한" />
-          <Column field="active_status_name" header="상태" />
-          <Column field="crtr_dt" header="등록일시" />
-          <Column field="last_login_dt" header="마지막 로그인" />
-          <Column field="create_route" header="등록경로" />
+          <Column field="active_status_name" header="상태" className="!text-center" />
+          {!isPhone && <Column field="crtr_dt" header="등록일시" className="!text-center" />}
+          {!isPhone && <Column field="last_login_dt" header="마지막 로그인" className="!text-center" />}
+          {!isPhone && <Column field="create_route" header="등록경로" className="!text-center" />}
         </DataTable>
         <Paginator first={first} rows={rows} totalRecords={userList?.recordsTotal} onPageChange={onPageChange} />
       </div>

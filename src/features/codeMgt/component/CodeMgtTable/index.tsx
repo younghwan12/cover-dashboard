@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useModal } from "@/common";
 import { AddCodeModal, DetailCodeModal } from "@/features/modal";
 import { useAppSelector } from "@/redux/hooks";
@@ -26,6 +26,21 @@ const CodeMgtTable = () => {
   const [getCdList, { data: cdList, isFetching }] = useLazyGetCodeListQuery();
 
   const [delCode] = useDelCodeListMutation();
+
+  const [isPhone, setIsPhone] = useState(false);
+
+  const handleResize = useCallback(() => {
+    setIsPhone(window.innerWidth <= 720);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [handleResize]);
 
   // 팝업 열리면 데이터 호출
   useEffect(() => {
@@ -125,15 +140,15 @@ const CodeMgtTable = () => {
           rows={rows}
           onRowClick={(e) => rowClick(e)}
         >
-          <Column selectionMode="multiple" headerStyle={{ width: "3rem" }}></Column>
-          <Column field="no" header="No." />
+          <Column selectionMode="multiple" className="!text-center" headerStyle={{ width: "3rem" }}></Column>
+          <Column field="no" header="No." className="!text-center" />
           <Column field="code_group_name" header="그룹코드명" />
-          <Column field="code_id" header="코드ID" />
+          <Column field="code_id" header="코드ID" className="!text-center" />
           <Column field="code_name" header="코드명" />
-          <Column field="parent_code_group_name" header="상위그룹코드명" />
-          <Column field="mapping_code" header="매핑코드명" />
-          <Column field="code_order" header="정렬순서" />
-          <Column field="use_yn" header="사용여부" />
+          {!isPhone && <Column field="parent_code_group_name" header="상위그룹코드명" className="!text-center" />}
+          {!isPhone && <Column field="mapping_code" header="매핑코드명" className="!text-center" />}
+          {!isPhone && <Column field="code_order" header="정렬순서" className="!text-center" />}
+          {!isPhone && <Column field="use_yn" header="사용여부" className="!text-center" />}
         </DataTable>
         <Paginator first={first} rows={rows} totalRecords={cdList?.recordsTotal} onPageChange={onPageChange} />
       </div>

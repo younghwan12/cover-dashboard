@@ -15,12 +15,20 @@ const Pagination = () => {
   //breadCrumb
   const router = useRouter();
 
-  const bread = { icon: "pi pi-chevron-right" };
+  const bread = <i style={{ transform: "scale(0.85)" }} className="p-icon pi pi-chevron-right"></i>;
 
   const userInfoDetail = useAppSelector((state) => state.login.userInfoDetail);
 
   const menuItems: MenuItem[] = userInfoDetail?.menu?.map((item) => {
-    const label = item.up_menu_name ? `${item.up_menu_name} > ${item.menu_name}` : item.menu_name;
+    const label = item.up_menu_name ? (
+      <>
+        {item.up_menu_name}
+        {bread}
+        {item.menu_name}
+      </>
+    ) : (
+      item.menu_name
+    );
     return {
       label,
       url: item.menu_location.replace("/service", ""),

@@ -1,37 +1,40 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { useModal } from "@/common";
 import { useAppSelector } from "@/redux/hooks";
-import { Column } from "primereact/column";
-import {
-  DataTable,
-  DataTableSelection,
-  DataTableSelectionChangeEvent,
-} from "primereact/datatable";
-import { Paginator } from "primereact/paginator";
-import { IssuesList } from "../../types";
-import { useLazyGetIssuesMgtListQuery } from "../../redux";
 import { Button } from "antd";
 import { useRouter } from "next/router";
-import IssuesWriteModal from "@/features/modal/IssuesWriteModal";
+import { Column } from "primereact/column";
+import { DataTable, DataTableSelection } from "primereact/datatable";
+import { Paginator } from "primereact/paginator";
+import { useLazyGetIssuesMgtListQuery } from "../../redux";
+import { IssuesList } from "../../types";
 
 const IssuesTable = () => {
   const router = useRouter();
   const [first, setFirst] = useState(0);
   const [rows, setRows] = useState(15);
-  const [modal, contextHolder] = useModal();
-  const [visible, setVisible] = useState(false);
-  const [selectedDatas, setSelectedDatas] = useState<
-    DataTableSelection<IssuesList[]> | undefined
-  >();
 
   const token = useAppSelector((state) => state.login.userInfo);
   const userInfoDetail = useAppSelector((state) => state.login.userInfoDetail);
 
   const { searchParams } = useAppSelector((state) => state.issues);
 
-  const [getIssuesList, { data: issuesList, isFetching }] =
-    useLazyGetIssuesMgtListQuery();
+  const [getIssuesList, { data: issuesList, isFetching }] = useLazyGetIssuesMgtListQuery();
+  const [isPhone, setIsPhone] = useState(false);
+
+  const handleResize = useCallback(() => {
+    setIsPhone(window.innerWidth <= 720);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [handleResize]);
 
   // 팝업 열리면 데이터 호출
   useEffect(() => {
@@ -77,11 +80,7 @@ const IssuesTable = () => {
             건)
           </div>
           <div className="mb-1">
-            <Button
-              type="primary"
-              size="middle"
-              onClick={() => router.push("/issues/add")}
-            >
+            <Button type="primary" size="middle" onClick={() => router.push("/issues/add")}>
               등록
             </Button>
             <Button className="ml-2">액셀다운로드</Button>
@@ -98,24 +97,19 @@ const IssuesTable = () => {
           scrollable
           onRowClick={issuesDetail}
         >
-          <Column field="issue_id" header="No." />
+          <Column field="issue_id" header="No." className="!text-center" />
           <Column field="project_name" header="프로젝트명" />
-          <Column field="nexcore_solution_name" header="솔루션" />
+          {!isPhone && <Column field="nexcore_solution_name" header="솔루션" className="!text-center" />}
           <Column field="issue_request_name" header="요청사항" />
           <Column field="issue_name" header="제목" />
-          <Column field="crtr_name" header="작성자" />
-          <Column field="last_login_dt" header="담당자" />
-          <Column field="issue_status_name" header="상태" />
-          <Column field="question_cnt" header="문의건수" />
-          <Column field="answer_cnt" header="답변건수" />
-          <Column field="crtr_dt" header="등록일시" />
+          {!isPhone && <Column field="crtr_name" header="작성자" className="!text-center" />}
+          {!isPhone && <Column field="last_login_dt" header="담당자" className="!text-center" />}
+          {!isPhone && <Column field="issue_status_name" header="상태" className="!text-center" />}
+          {!isPhone && <Column field="question_cnt" header="문의건수" className="!text-center" />}
+          {!isPhone && <Column field="answer_cnt" header="답변건수" className="!text-center" />}
+          {!isPhone && <Column field="crtr_dt" header="등록일시" className="!text-center" />}
         </DataTable>
-        <Paginator
-          first={first}
-          rows={rows}
-          totalRecords={issuesList?.recordsTotal}
-          onPageChange={onPageChange}
-        />
+        <Paginator first={first} rows={rows} totalRecords={issuesList?.recordsTotal} onPageChange={onPageChange} />
       </div>
     </>
   );

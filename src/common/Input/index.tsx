@@ -1,7 +1,7 @@
 import { Input as AntdInput, InputProps } from "antd";
 
 const Input = (props: InputProps) => {
-  return <AntdInput allowClear {...props} />;
+  return <AntdInput className="min-w-[200px] max-w-[200px]" allowClear {...props} />;
 };
 export default Input;
 

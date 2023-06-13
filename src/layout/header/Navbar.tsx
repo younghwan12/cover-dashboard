@@ -3,11 +3,17 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { MenuOutlined } from "@ant-design/icons";
+import { UserInfoModal } from "@/features/modal";
+import { useModal } from "@/common";
+import { useAppDispatch } from "@/redux/hooks";
+import { logout } from "@/features/login/redux/loginSlice";
 
 const Navbar = ({ menu, userInfo }) => {
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
   const [isPhone, setIsPhone] = useState(false);
+  const [modal, contextHolder] = useModal();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const handleResize = () => {
@@ -22,6 +28,16 @@ const Navbar = ({ menu, userInfo }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const handleLogout = () => {
+    modal.confirm({
+      title: "로그아웃 하시겠습니까?",
+      onOk() {
+        dispatch(logout());
+        router.push("/");
+      },
+    });
+  };
 
   const [visible, setVisible] = useState(false);
   const items: MenuProps["items"] = [
@@ -77,6 +93,11 @@ const Navbar = ({ menu, userInfo }) => {
       label: "내 정보",
       onClick: () => setVisible(true),
     },
+    {
+      key: "2",
+      label: "로그아웃",
+      onClick: () => handleLogout(),
+    },
   ];
 
   return (
@@ -85,7 +106,11 @@ const Navbar = ({ menu, userInfo }) => {
         /** */
         isMobile ? (
           isPhone ? (
-            <Menu theme="light" mode="horizontal" items={items} />
+            <>
+              <Menu theme="light" mode="horizontal" items={items} />
+              {contextHolder}
+              <UserInfoModal visible={visible} setVisible={setVisible} />
+            </>
           ) : (
             <div className="px-2">
               <div className="flex flex-row items-center justify-between text-gray-700">
@@ -96,7 +121,7 @@ const Navbar = ({ menu, userInfo }) => {
 
                     return (
                       <div className="relative" key={item.menu_id}>
-                        <div className="peer cursor-pointer p-5 text-lg w-10 h-10 flex justify-center items-center rounded-[50%] border-[2px] border-gray-700 mr-5">
+                        <div className="peer cursor-pointer p-5 text-lg w-10 h-10 flex justify-center items-center rounded-[50%] border-[1px] border-blue-300 text-white bg-blue-300 mr-5">
                           <Link href={item.menu_location.replace("/service", "")}>{item.menu_name[0]}</Link>
                         </div>
                         {subMenus.length > 0 && (
@@ -121,7 +146,7 @@ const Navbar = ({ menu, userInfo }) => {
                   })}
 
                 <div className="relative">
-                  <div className="peer cursor-pointer text-lg w-10 h-10 flex justify-center items-center rounded-[50%] border-[2px] border-gray-700 mr-5">
+                  <div className="peer cursor-pointer text-lg w-10 h-10 flex justify-center items-center rounded-[50%] border-[1px] bg-blue-300 border-bg-blue-300 text-white mr-5">
                     <Link href="/license">라</Link>
                   </div>
                   <div className="hidden absolute py-2 px-3 left-0 top-full peer-hover:flex hover:flex w-40 flex-col bg-white shadow-md border-t-[3px] border-[#0072bb] z-[10]">

@@ -54,29 +54,29 @@ const DashboardTable = () => {
   }, [token?.jwt, searchParams]);
 
   const createDataObject = (dashboardList) => {
-    const labels = dashboardList.map((item) => item.code_name);
+    const labels = dashboardList?.map((item) => item.code_name);
 
     const data = {
       labels,
       datasets: [
         {
           label: "문의사항",
-          data: dashboardList.map((item) => item.all_cnt),
+          data: dashboardList?.map((item) => item.all_cnt),
           backgroundColor: "rgb(247, 163, 92)",
         },
         {
           label: "요청중",
-          data: dashboardList.map((item) => item.request_cnt),
+          data: dashboardList?.map((item) => item.request_cnt),
           backgroundColor: "rgb(255, 103, 125)",
         },
         {
           label: "담당자 진행중",
-          data: dashboardList.map((item) => item.charger_ing_cnt),
+          data: dashboardList?.map((item) => item.charger_ing_cnt),
           backgroundColor: "rgb(95, 118, 232)",
         },
         {
           label: "답변 완료",
-          data: dashboardList.map((item) => item.complete_cnt),
+          data: dashboardList?.map((item) => item.complete_cnt),
           backgroundColor: "rgb(75, 192, 192)",
         },
       ],
@@ -93,7 +93,7 @@ const DashboardTable = () => {
       request_cnt: 0,
     };
 
-    dashboardList.forEach((item) => {
+    dashboardList?.forEach((item) => {
       dataObject.all_cnt += item.all_cnt;
       dataObject.charger_ing_cnt += item.charger_ing_cnt;
       dataObject.complete_cnt += item.complete_cnt;
